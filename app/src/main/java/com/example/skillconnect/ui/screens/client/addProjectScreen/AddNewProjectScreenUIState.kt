@@ -7,5 +7,7 @@ data class AddNewProjectScreenUIState(
     val deadline:String="",
     val skills:List<String> = emptyList(),
     val experience:Number = 0,
-    val jobRequirements:String=""
+    val jobRequirements:String="",
+    val aboutClient:String="",
+    val rolesAndResponsibilities:String="",
 )

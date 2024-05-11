@@ -33,8 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun AddNewProjectScreen(modifier: Modifier = Modifier) {
-    val addNewProjectScreenViewModel: AddNewProjectScreenViewModel = viewModel()
+fun AddNewProjectScreen(modifier: Modifier = Modifier,addNewProjectScreenViewModel: AddNewProjectScreenViewModel) {
     val addNewProjectScreenUIState by addNewProjectScreenViewModel.uiState.collectAsState()
     Scaffold(topBar = { AddNewProjectScreenTopBar() }) {
         AddNewProject(

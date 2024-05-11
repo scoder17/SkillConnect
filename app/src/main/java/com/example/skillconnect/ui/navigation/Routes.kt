@@ -19,5 +19,6 @@ sealed class Routes(val route: String) {
     data object FreelancerTechDetailsScreen : Routes("freelancerTechDetailsScreen")
     data object ClientBasicDetailsScreen : Routes("clientBasicDetailsScreen")
     data object ClientSocialLinksScreen : Routes("clientSocialLinksScreen")
-
+    data object AddNewProjectScreen : Routes("addNewProjectScreen")
+    data object AddNewProjectScreen2 : Routes("addNewProjectScreen2")
 }

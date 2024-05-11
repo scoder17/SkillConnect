@@ -18,6 +18,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.skillconnect.R
 import com.example.skillconnect.model.FreeLancerData
+import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen
+import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen2
+import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreenUIState
+import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreenViewModel
 import com.example.skillconnect.ui.screens.client.home.ClientHomeScreen
 import com.example.skillconnect.ui.screens.client.searchScreen.ClientSearchScreen
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientBasicDetailsFormScreen
@@ -46,6 +50,7 @@ fun NavigationGraph(
     authViewModel: AuthViewModel,
     formScreenViewModel: FormScreenViewModel,
     clientFormScreenViewModel: ClientFormScreenViewModel,
+    addNewProjectScreenViewModel: AddNewProjectScreenViewModel,
     onBottomBarVisibilityChanged: (Boolean) -> Unit
 ) {
     val formScreenUiState by formScreenViewModel.uiState.collectAsState()
@@ -238,7 +243,11 @@ fun NavigationGraph(
                 onTwitterChange = { clientFormScreenViewModel.updateTwitter(it) },
             )
         }
-
-
+        composable(Routes.AddNewProjectScreen.route) {
+            AddNewProjectScreen(addNewProjectScreenViewModel = addNewProjectScreenViewModel)
+        }
+        composable(Routes.AddNewProjectScreen2.route) {
+            AddNewProjectScreen2(addNewProjectScreenViewModel = addNewProjectScreenViewModel)
+        }
     }
 }
