@@ -70,7 +70,7 @@ fun WelcomeScreen(navigateToNext:(String)->Unit) {
             modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(
-            text = "To SkillConnect",
+            text = "To SkillConnect!",
             color = MaterialTheme.colorScheme.primary.copy(alpha = alphaElement2),
             fontSize = 24.sp,
             modifier = Modifier.padding(bottom = 8.dp)

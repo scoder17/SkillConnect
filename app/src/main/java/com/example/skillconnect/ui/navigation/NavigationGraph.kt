@@ -17,6 +17,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.skillconnect.R
+import com.example.skillconnect.ui.screens.client.home.ClientHomeScreen
+import com.example.skillconnect.ui.screens.client.searchScreen.ClientSearchScreen
 import com.example.skillconnect.ui.screens.freelancer.formScreen.BasicDetailsFormScreen
 import com.example.skillconnect.ui.screens.freelancer.formScreen.FormScreenViewModel
 import com.example.skillconnect.ui.screens.freelancer.formScreen.FreelancerFormScreen
@@ -26,6 +28,7 @@ import com.example.skillconnect.ui.screens.freelancer.home.HomeScreen
 import com.example.skillconnect.ui.screens.freelancer.message.MessageListScreen
 import com.example.skillconnect.ui.screens.freelancer.profile.ProfileScreen
 import com.example.skillconnect.ui.screens.freelancer.project.ProjectScreen
+import com.example.skillconnect.ui.screens.freelancer.search.SearchScreen
 import com.example.skillconnect.ui.screens.freelancer.signIn.SignInScreen
 import com.example.skillconnect.ui.screens.welcome.GetStartedScreen
 import com.example.skillconnect.ui.screens.welcome.WelcomeScreen
@@ -46,6 +49,16 @@ fun NavigationGraph(
             WelcomeScreen(navigateToNext = { navController.navigate(it) })
         }
 
+        composable("searchScreen") {
+            onBottomBarVisibilityChanged(true)
+            SearchScreen(authViewModel = authViewModel)
+        }
+
+        composable("clientSearchScreen") {
+            onBottomBarVisibilityChanged(true)
+            ClientSearchScreen(authViewModel = authViewModel)
+        }
+
         composable("getStartedScreen") {
             onBottomBarVisibilityChanged(false)
             GetStartedScreen(navController = navController)
@@ -55,6 +68,7 @@ fun NavigationGraph(
             onBottomBarVisibilityChanged(false)
             SignInScreen(viewModel = authViewModel, navigateTo = { navController.navigate(it) })
         }
+
         composable("signUpScreen") {
             onBottomBarVisibilityChanged(false)
             FreelancerFormScreen(
@@ -87,6 +101,11 @@ fun NavigationGraph(
                         )
                     }
                 })
+        }
+
+        composable("clientHomeScreen") {
+            onBottomBarVisibilityChanged(true)
+            ClientHomeScreen(navigateToNext = { navController.navigate(it) })
         }
 
         composable("projectScreen") {
