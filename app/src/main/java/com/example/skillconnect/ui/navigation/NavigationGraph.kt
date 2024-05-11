@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.skillconnect.R
+import com.example.skillconnect.model.FreeLancerData
 import com.example.skillconnect.ui.screens.client.home.ClientHomeScreen
 import com.example.skillconnect.ui.screens.client.searchScreen.ClientSearchScreen
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientBasicDetailsFormScreen
@@ -146,7 +147,7 @@ fun NavigationGraph(
                 navController.navigate(Routes.SignInScreen.route) {
                     popUpTo(0)
                 }
-            }, authViewModel = authViewModel)
+            }, currentFreelancer = authViewModel.currentfreelancer?:FreeLancerData())
         }
 
         composable(Routes.FreelancerBasicDetailsScreen.route) {

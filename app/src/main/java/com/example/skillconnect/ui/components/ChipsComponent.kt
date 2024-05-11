@@ -53,13 +53,11 @@ fun Tag(tagText: String) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ChipsComponent(
-    authViewModel: AuthViewModel
+    skills: List<String>
 ){
-    val currentFreelancer = authViewModel.currentfreelancer?.skills?: emptyList()
-
     FlowRow(
     ) {
-        currentFreelancer.forEach() { item ->
+       skills.forEach() { item ->
 
             Tag(item)
         }
