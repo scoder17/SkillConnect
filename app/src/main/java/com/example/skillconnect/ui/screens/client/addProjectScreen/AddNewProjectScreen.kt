@@ -27,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -69,61 +70,45 @@ fun AddNewProject(
         ) {
 
         Spacer(modifier = Modifier.size(30.dp))
-        Text(
-            text = "Title",
-            modifier = Modifier.padding(bottom = 10.dp),
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray
-        )
+//
 
         OutlinedTextField(
+            label = { Text(text = "Title", color = Color.Gray) },
             value = title,
             onValueChange = { onTitleChange(it) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            trailingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "name") }
+            leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "name") }
         )
         Spacer(modifier = Modifier.size(20.dp))
-        Text(
-            text = "Description",
-            modifier = Modifier.padding(bottom = 10.dp),
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray
-        )
+
         OutlinedTextField(
+            label = { Text(text = "Description", color = Color.Gray) },
             value = description,
             onValueChange = { onDescriptionChange(it) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            trailingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
+            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
         )
         Spacer(modifier = Modifier.size(20.dp))
-        Text(
-            text = "Budget",
-            modifier = Modifier.padding(bottom = 10.dp),
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray
-        )
+
         OutlinedTextField(
+            label = { Text(text = "Budget", color = Color.Gray) },
             value = budget,
             onValueChange = { onBudgetChange(it) },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            trailingIcon = { Icon(imageVector = Icons.Default.MonetizationOn, contentDescription = "budget") }
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
+            leadingIcon = { Icon(imageVector = Icons.Default.MonetizationOn, contentDescription = "budget") }
         )
         Spacer(modifier = Modifier.size(20.dp))
-        Text(
-            text = "DeadLine",
-            modifier = Modifier.padding(bottom = 10.dp),
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray
-        )
+
         OutlinedTextField(
+            label = { Text(text = "Deadline", color = Color.Gray) },
             value = deadLine,
             onValueChange = { onDeadLineChange(it) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            trailingIcon = { Icon(imageVector = Icons.Default.AccessTime, contentDescription = "deadLine") }
+            leadingIcon = { Icon(imageVector = Icons.Default.AccessTime, contentDescription = "deadLine") }
         )
         Spacer(modifier = Modifier.size(20.dp))
         Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.End) {
