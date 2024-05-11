@@ -1,6 +1,7 @@
 package com.example.skillconnect.ui.screens.freelancer.profile
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -49,6 +50,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skillconnect.ui.theme.SkillConnectTheme
 import com.example.skillconnect.R
+import com.example.skillconnect.data.Freelancer
+import com.example.skillconnect.model.FreeLancerData
 import com.example.skillconnect.model.FreelancerIncomeDetails
 import com.example.skillconnect.ui.components.ChipsComponent
 import com.example.skillconnect.ui.viewModel.AuthViewModel
@@ -59,8 +62,9 @@ import kotlin.math.min
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     onLogOut: () -> Unit = {},
-    authViewModel: AuthViewModel
+    currentFreelancer: FreeLancerData = FreeLancerData()
 ) {
+    Log.d("TAG", "ProfileScreen: $currentFreelancer")
     val profileScreenViewModel: ProfileScreenViewModel = viewModel()
     val profileScreenUiState by profileScreenViewModel.uiState.collectAsState()
     Scaffold(
@@ -72,7 +76,7 @@ fun ProfileScreen(
                 .padding(horizontal = 8.dp),
             profileScreenUiState = profileScreenUiState,
             userWorkHistory = profileScreenViewModel.freelancerWorkHistory,
-            authViewModel = authViewModel
+            currentFreelancer = currentFreelancer
         )
     }
 }
@@ -94,8 +98,8 @@ fun ProfileScreenTopBar(modifier: Modifier = Modifier, onLogOut: () -> Unit = {}
 fun ProfileContent(
     modifier: Modifier = Modifier,
     profileScreenUiState: ProfileScreenUiState,
-    userWorkHistory: List<FreelancerIncomeDetails> = listOf(),
-    authViewModel: AuthViewModel
+    currentFreelancer: FreeLancerData,
+    userWorkHistory: List<FreelancerIncomeDetails> = listOf()
 ) {
     Column(
         modifier = modifier
@@ -136,12 +140,12 @@ fun ProfileContent(
             modifier = Modifier
                 .padding(start = 15.dp)
                 .fillMaxWidth(),
-            userName = profileScreenUiState.name,
+            userName = currentFreelancer.name,
             userLocation = profileScreenUiState.location,
             userDescription = profileScreenUiState.bio,
-            userLinkedinId = profileScreenUiState.linkedIn,
-            userTwitterId = profileScreenUiState.twitter,
-            userGithubId = profileScreenUiState.github
+            userLinkedinId = currentFreelancer.linkedIn,
+            userTwitterId = currentFreelancer.twitter,
+            userGithubId = currentFreelancer.github
         )
         Spacer(modifier = Modifier.size(10.dp))
         Spacer(
@@ -162,7 +166,7 @@ fun ProfileContent(
             aboutUser = profileScreenUiState.aboutUser
         )
         Spacer(modifier = Modifier.size(10.dp))
-        UserTechStack(modifier = Modifier.padding(8.dp), authViewModel = authViewModel)
+        UserTechStack(modifier = Modifier.padding(8.dp), currentFreelancer = currentFreelancer)
         Spacer(modifier = Modifier.size(10.dp))
         UserWorkHistory(modifier = Modifier.padding(8.dp), userWorkHistory = userWorkHistory)
     }
@@ -271,36 +275,13 @@ fun UserAboutMe(modifier: Modifier = Modifier, aboutUser: String) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun UserTechStack(
-    modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel
-) {
+fun UserTechStack(modifier: Modifier = Modifier, currentFreelancer: FreeLancerData) {
     Column(modifier = modifier) {
         Text(text = "Tech Stack", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.size(10.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.size(10.dp))
-//        FlowRow(
-//            modifier = Modifier,
-//        ) {
-//            TechSkill(color = Color.Blue, skill = "Kotlin")
-//            TechSkill(color = Color.Red, skill = "Java")
-//            TechSkill(color = Color.Green, skill = "Python")
-//            TechSkill(color = Color.Yellow, skill = "C++")
-//            TechSkill(color = Color.Magenta, skill = "C")
-//            TechSkill(color = Color.Cyan, skill = "JavaScript")
-//            TechSkill(color = Color.Gray, skill = "Swift")
-//            TechSkill(color = Color.LightGray, skill = "Go")
-//            TechSkill(color = Color.DarkGray, skill = "Rust")
-//            TechSkill(color = Color.Red, skill = "Ruby")
-//            TechSkill(color = Color.White, skill = "PHP")
-//            TechSkill(color = Color.Red, skill = "R")
-//            TechSkill(color = Color.Blue, skill = "HTML")
-//            TechSkill(color = Color.Green, skill = "CSS")
-//            TechSkill(color = Color.Yellow, skill = "SQL")
-//        }
-        ChipsComponent(authViewModel = authViewModel)
-
+        ChipsComponent(skills = currentFreelancer.skills)
     }
 }
 
@@ -395,9 +376,8 @@ fun UserBasicInfo(
     }
 }
 
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun ProfileScreenPreview() {
-//    val authViewModel: AuthViewModel = viewModel()
-//    SkillConnectTheme { ProfileScreen(authViewModel = authViewModel) }
-//}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun ProfileScreenPreview() {
+    SkillConnectTheme { ProfileScreen() }
+}

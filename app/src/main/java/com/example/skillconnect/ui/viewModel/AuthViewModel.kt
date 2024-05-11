@@ -58,6 +58,7 @@ open class AuthViewModel @Inject constructor(
                 "signIn: signin success"
             )
             inProgress = false
+            getFreelancer(it.user?.uid ?: "")
             isLoggedIn.value = true
         }
             .addOnFailureListener {
@@ -216,6 +217,10 @@ open class AuthViewModel @Inject constructor(
         }
 
     }
+
+    fun addProject(
+
+    ){}
 
     fun logout() {
         isLoggedIn.value = false
