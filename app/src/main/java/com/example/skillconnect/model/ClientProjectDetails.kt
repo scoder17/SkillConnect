@@ -7,4 +7,4 @@ data class ClientProjectDetails(
     val deadlineDate:String,
     val payment :String,
     val projectStatus: String
-    )
+)

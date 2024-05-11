@@ -41,16 +41,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skillconnect.ui.theme.SkillConnectTheme
 import com.example.skillconnect.R
+import com.example.skillconnect.model.ClientData
 import com.example.skillconnect.model.ClientPastProjectDetails
 import com.example.skillconnect.ui.screens.client.clientProfile.ClientProfileScreenUiState
 import com.example.skillconnect.ui.screens.client.clientProfile.ClientProfileScreenViewModel
+import com.example.skillconnect.ui.viewModel.AuthViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ClientProfileScreen(modifier: Modifier = Modifier) {
+fun ClientProfileScreen(modifier: Modifier = Modifier, currentClient:ClientData = ClientData() ) {
     val clientProfileScreenViewModel: ClientProfileScreenViewModel = viewModel()
     val clientProfileScreenUiState by clientProfileScreenViewModel.clientProfile.collectAsState()
 
@@ -218,9 +221,9 @@ fun UserAboutMe(modifier: Modifier = Modifier, aboutUser: String) {
 }
 
 @Composable
-fun UserBasicInfo(modifier: Modifier = Modifier,clientProfileScreenUiState: ClientProfileScreenUiState) {
+fun UserBasicInfo(modifier: Modifier = Modifier,clientProfileScreenUiState: ClientProfileScreenUiState, currentClient:ClientData = ClientData()) {
     Column(modifier = modifier) {
-        Text(text = clientProfileScreenUiState.name, style = MaterialTheme.typography.titleLarge)
+        Text(text = currentClient.name, style = MaterialTheme.typography.titleLarge)
         Text(text = clientProfileScreenUiState.description)
         Spacer(modifier = Modifier.size(8.dp))
         Row {
@@ -239,7 +242,7 @@ fun UserBasicInfo(modifier: Modifier = Modifier,clientProfileScreenUiState: Clie
                 modifier = Modifier.size(25.dp)
             )
             Spacer(modifier = Modifier.size(4.dp))
-            Text(text = clientProfileScreenUiState.linkedIn)
+            Text(text = currentClient.linkedIn)
         }
         Spacer(modifier = Modifier.size(8.dp))
         Row {
@@ -257,5 +260,7 @@ fun UserBasicInfo(modifier: Modifier = Modifier,clientProfileScreenUiState: Clie
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProfileScreenPreview() {
-    SkillConnectTheme { ClientProfileScreen() }
+    SkillConnectTheme {
+        ClientProfileScreen()
+    }
 }

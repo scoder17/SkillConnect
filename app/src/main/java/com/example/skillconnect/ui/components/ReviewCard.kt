@@ -51,7 +51,7 @@ fun ReviewCard(
         Column(
             modifier = Modifier
                 .padding(16.dp)
-//                .fillMaxWidth(0.40f)
+//                .fillMaxWidth()
 //                .height(130.dp)
                 .width(150.dp)
         ) {

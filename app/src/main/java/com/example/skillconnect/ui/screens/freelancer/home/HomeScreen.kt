@@ -1,6 +1,7 @@
 package com.example.skillconnect.ui.screens.freelancer.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -92,11 +93,14 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-                UserIncomeCard(user = "Aman",
+                UserIncomeCard(
+                    modifier = Modifier.clickable{navigateToNext("incomeScreen")},
+                    user = "Aman",
                     incomeLastMonth = 5000.00,
                     display = "Earnings",
                     dispMonth = true,
-                    incomeIncrease = 1.06
+                    incomeIncrease = 1.06,
+                    onClick = {navigateToNext("incomeScreen")}
                 )
 
 
@@ -117,7 +121,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(10.dp))
         Spacer(modifier = Modifier.height(10.dp))
         NameAndSeeMoreLink(
-            name = "Statistics",
+            name = "Reviews",
             seeMore = "See More",
             onClickSeeMore = {})
 
@@ -144,7 +148,7 @@ fun HomeScreen(
 
 
         NameAndSeeMoreLink(
-            name = "Ongoing Projects",
+            name = "Projects",
             seeMore = "See More",
             onClickSeeMore = {navigateToNext("projectScreen")}
         )
