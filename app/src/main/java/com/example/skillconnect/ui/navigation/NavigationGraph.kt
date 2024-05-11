@@ -82,7 +82,7 @@ fun NavigationGraph(
                 viewModel = authViewModel,
                 navigateTo = { navController.navigate(it) })
         }
-        composable("signUpScreen") {
+        composable("freeLancerSignUpScreen") {
             onBottomBarVisibilityChanged(false)
             FreelancerFormScreen(
                 navController = navController,
@@ -90,6 +90,7 @@ fun NavigationGraph(
             )
         }
         composable(Routes.ClientSignUpScreen.route) {
+
             onBottomBarVisibilityChanged(false)
             ClientFormScreen(
                 navController = navController,
