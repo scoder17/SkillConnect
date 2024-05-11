@@ -45,7 +45,8 @@ class MainActivity : ComponentActivity() {
                             BottomBar(
                                 navController = navController,
                                 state = buttonsVisible,
-                                modifier = Modifier
+                                modifier = Modifier,
+                                authViewModel = authViewModel
                             )
                         }
                     }

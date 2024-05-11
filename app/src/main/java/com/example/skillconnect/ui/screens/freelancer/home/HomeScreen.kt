@@ -50,62 +50,68 @@ fun HomeScreen(
     navigateToNext:(String)->Unit
 ) {
 
-    TopAppBar(
-        modifier = modifier,
-        title = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Surface(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape), // Make the avatar area circular
-                    shape = MaterialTheme.shapes.small, // Optional: Set a shape for Surface
-                ) {
-                    userAvatar()
-                }
-                Spacer(modifier = Modifier.width(8.dp)) // Add some spacing between avatar and text
-                Column {
-                    Text(text = userName)
-                    Text(text = userPosition, style = MaterialTheme.typography.bodySmall)
-                }
-            }
-        },
-        navigationIcon = {
-            // You can add a navigation icon here if needed
-        },
-        actions = {
-            notificationSection()
-        }
-    )
+//    TopAppBar(
+//        modifier = modifier,
+//        title = {
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.Center
+//            ) {
+//                Surface(
+//                    modifier = Modifier
+//                        .size(40.dp)
+//                        .clip(CircleShape), // Make the avatar area circular
+//                    shape = MaterialTheme.shapes.small, // Optional: Set a shape for Surface
+//                ) {
+//                    userAvatar()
+//                }
+//                Spacer(modifier = Modifier.width(8.dp)) // Add some spacing between avatar and text
+//                Column {
+//                    Text(text = userName)
+//                    Text(text = userPosition, style = MaterialTheme.typography.bodySmall)
+//                }
+//            }
+//        },
+//        navigationIcon = {
+//            // You can add a navigation icon here if needed
+//        },
+//        actions = {
+//            notificationSection()
+//        }
+//    )
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
+            .padding(8.dp),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            UserIncomeCard(user = "Aman",
-                incomeLastMonth = 5000.00,
-                display = "Earnings",
-                dispMonth = true,
-                incomeIncrease = 1.06
-            )
+
+                UserIncomeCard(user = "Aman",
+                    incomeLastMonth = 5000.00,
+                    display = "Earnings",
+                    dispMonth = true,
+                    incomeIncrease = 1.06
+                )
+
+
 //            Spacer(modifier = Modifier.width(10.dp))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                TitleValueCard(title = "Freelancer level", value = "Top rated")
-                Spacer(modifier = Modifier.height(10.dp))
-                TitleValueCard(title = "Online Delivery", value = "82%")
+
+                    TitleValueCard(title = "Freelancer level", value = "Top rated")
+
+//                Spacer(modifier = Modifier.weight(1f))
+
+                    TitleValueCard(title = "Online Delivery", value = "82%")
+
             }
         }
         Spacer(modifier = Modifier.height(10.dp))
@@ -126,7 +132,7 @@ fun HomeScreen(
                 rating = 4.9f,
                 numReviews = 40
             )
-//            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.weight(1f))
             ReviewCard(
                 name = "Aman",
                 rating = 4.9f,
@@ -139,8 +145,8 @@ fun HomeScreen(
 
         NameAndSeeMoreLink(
             name = "Ongoing Projects",
-            seeMore = "",
-            onClickSeeMore = {}
+            seeMore = "See More",
+            onClickSeeMore = {navigateToNext("projectScreen")}
         )
 //        Spacer(modifier = Modifier.height(10.dp))
         Row(

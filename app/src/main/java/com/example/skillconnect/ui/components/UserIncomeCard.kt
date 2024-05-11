@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -41,16 +42,17 @@ fun UserIncomeCard(
     ) {
         Column(
             modifier = Modifier
+//                .fillMaxSize()
                 .fillMaxWidth(0.60f)
                 .padding(top = 16.dp, bottom = 16.dp, start = 20.dp, end = 20.dp),
 
             ) {
 
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+//            Row(
+//                modifier = modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
                 Text(
                     text = display,
                     color = Color.White,
@@ -62,7 +64,7 @@ fun UserIncomeCard(
                     color = Color.Gray,
                     style = MaterialTheme.typography.labelMedium
                 )
-            }
+//            }
 
 
             Spacer(modifier = Modifier.height(50.dp))

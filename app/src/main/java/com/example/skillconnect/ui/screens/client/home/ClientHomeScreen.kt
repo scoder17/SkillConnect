@@ -97,7 +97,7 @@ fun ClientHomeScreen(
 //Ongoing Projects
             NameAndSeeMoreLink(
                 name = "Ongoing Projects",
-                seeMore = "",
+                seeMore = "See More",
                 onClickSeeMore = {}
             )
 //        Spacer(modifier = Modifier.height(10.dp))
