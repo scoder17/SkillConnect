@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.sp
 fun UserIncomeCard(
     modifier: Modifier = Modifier,
     user: String,
+    display: String,
+    dispMonth: Boolean,
     incomeLastMonth: Double,
     incomeIncrease: Double
 ) {
@@ -42,7 +44,7 @@ fun UserIncomeCard(
                 .fillMaxWidth(0.60f)
                 .padding(top = 16.dp, bottom = 16.dp, start = 20.dp, end = 20.dp),
 
-        ) {
+            ) {
 
             Row(
                 modifier = modifier.fillMaxWidth(),
@@ -50,7 +52,7 @@ fun UserIncomeCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Earnings",
+                    text = display,
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -77,17 +79,37 @@ fun UserIncomeCard(
 
             Text(
                 buildAnnotatedString {
-                    if (incomeIncrease < 0) {
-                        withStyle(style = SpanStyle(color = Color.Red)) {
-                            append("-$incomeIncrease")
+                    if (dispMonth) {
+
+                        if (incomeIncrease < 0) {
+                            withStyle(style = SpanStyle(color = Color.Red)) {
+                                append("-$incomeIncrease")
+                            }
                         }
-                    } else {
-                        withStyle(style = SpanStyle(color = Color.Green)) {
-                            append("$incomeIncrease")
+                        else {
+                            withStyle(style = SpanStyle(color = Color.Green)) {
+                                append("$incomeIncrease")
+                            }
+                        }
+
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Gray
+                            )
+                        ) {
+                            append(" than last month ")
                         }
                     }
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = Color.Gray)){
-                        append(" than last month ")
+                    else {
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Gray
+                            )
+                        ) {
+                            append("")
+                        }
                     }
 
 
@@ -102,7 +124,9 @@ fun UserIncomeCard(
 fun UserIncomeCardPreview() {
     UserIncomeCard(
         user = "John Doe",
+        display = "Expense",
         incomeLastMonth = 1000.0,
+        dispMonth = false,
         incomeIncrease = 50.0
     )
 }
