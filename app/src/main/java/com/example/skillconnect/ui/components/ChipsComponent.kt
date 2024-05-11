@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.example.skillconnect.ui.viewModel.AuthViewModel
 
 @Composable
-fun Tag(tagText: String="machine learning ") {
+fun Tag(tagText: String) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 5.dp)
@@ -52,7 +52,9 @@ fun Tag(tagText: String="machine learning ") {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ChipsComponent(authViewModel: AuthViewModel){
+fun ChipsComponent(
+    authViewModel: AuthViewModel
+){
     val currentFreelancer = authViewModel.currentfreelancer?.skills?: emptyList()
 
     FlowRow(

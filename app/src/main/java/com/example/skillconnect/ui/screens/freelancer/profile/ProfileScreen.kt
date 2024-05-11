@@ -50,11 +50,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skillconnect.ui.theme.SkillConnectTheme
 import com.example.skillconnect.R
 import com.example.skillconnect.model.FreelancerIncomeDetails
+import com.example.skillconnect.ui.components.ChipsComponent
+import com.example.skillconnect.ui.viewModel.AuthViewModel
 import kotlin.math.min
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier, onLogOut: () -> Unit = {}) {
+fun ProfileScreen(
+    modifier: Modifier = Modifier,
+    onLogOut: () -> Unit = {},
+    authViewModel: AuthViewModel
+) {
     val profileScreenViewModel: ProfileScreenViewModel = viewModel()
     val profileScreenUiState by profileScreenViewModel.uiState.collectAsState()
     Scaffold(
@@ -65,7 +71,8 @@ fun ProfileScreen(modifier: Modifier = Modifier, onLogOut: () -> Unit = {}) {
                 .padding(it)
                 .padding(horizontal = 8.dp),
             profileScreenUiState = profileScreenUiState,
-            userWorkHistory = profileScreenViewModel.freelancerWorkHistory
+            userWorkHistory = profileScreenViewModel.freelancerWorkHistory,
+            authViewModel = authViewModel
         )
     }
 }
@@ -87,7 +94,8 @@ fun ProfileScreenTopBar(modifier: Modifier = Modifier, onLogOut: () -> Unit = {}
 fun ProfileContent(
     modifier: Modifier = Modifier,
     profileScreenUiState: ProfileScreenUiState,
-    userWorkHistory: List<FreelancerIncomeDetails> = listOf()
+    userWorkHistory: List<FreelancerIncomeDetails> = listOf(),
+    authViewModel: AuthViewModel
 ) {
     Column(
         modifier = modifier
@@ -154,7 +162,7 @@ fun ProfileContent(
             aboutUser = profileScreenUiState.aboutUser
         )
         Spacer(modifier = Modifier.size(10.dp))
-        UserTechStack(modifier = Modifier.padding(8.dp))
+        UserTechStack(modifier = Modifier.padding(8.dp), authViewModel = authViewModel)
         Spacer(modifier = Modifier.size(10.dp))
         UserWorkHistory(modifier = Modifier.padding(8.dp), userWorkHistory = userWorkHistory)
     }
@@ -263,31 +271,36 @@ fun UserAboutMe(modifier: Modifier = Modifier, aboutUser: String) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun UserTechStack(modifier: Modifier = Modifier) {
+fun UserTechStack(
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel
+) {
     Column(modifier = modifier) {
         Text(text = "Tech Stack", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.size(10.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.size(10.dp))
-        FlowRow(
-            modifier = Modifier,
-        ) {
-            TechSkill(color = Color.Blue, skill = "Kotlin")
-            TechSkill(color = Color.Red, skill = "Java")
-            TechSkill(color = Color.Green, skill = "Python")
-            TechSkill(color = Color.Yellow, skill = "C++")
-            TechSkill(color = Color.Magenta, skill = "C")
-            TechSkill(color = Color.Cyan, skill = "JavaScript")
-            TechSkill(color = Color.Gray, skill = "Swift")
-            TechSkill(color = Color.LightGray, skill = "Go")
-            TechSkill(color = Color.DarkGray, skill = "Rust")
-            TechSkill(color = Color.Red, skill = "Ruby")
-            TechSkill(color = Color.White, skill = "PHP")
-            TechSkill(color = Color.Red, skill = "R")
-            TechSkill(color = Color.Blue, skill = "HTML")
-            TechSkill(color = Color.Green, skill = "CSS")
-            TechSkill(color = Color.Yellow, skill = "SQL")
-        }
+//        FlowRow(
+//            modifier = Modifier,
+//        ) {
+//            TechSkill(color = Color.Blue, skill = "Kotlin")
+//            TechSkill(color = Color.Red, skill = "Java")
+//            TechSkill(color = Color.Green, skill = "Python")
+//            TechSkill(color = Color.Yellow, skill = "C++")
+//            TechSkill(color = Color.Magenta, skill = "C")
+//            TechSkill(color = Color.Cyan, skill = "JavaScript")
+//            TechSkill(color = Color.Gray, skill = "Swift")
+//            TechSkill(color = Color.LightGray, skill = "Go")
+//            TechSkill(color = Color.DarkGray, skill = "Rust")
+//            TechSkill(color = Color.Red, skill = "Ruby")
+//            TechSkill(color = Color.White, skill = "PHP")
+//            TechSkill(color = Color.Red, skill = "R")
+//            TechSkill(color = Color.Blue, skill = "HTML")
+//            TechSkill(color = Color.Green, skill = "CSS")
+//            TechSkill(color = Color.Yellow, skill = "SQL")
+//        }
+        ChipsComponent(authViewModel = authViewModel)
+
     }
 }
 
@@ -382,8 +395,9 @@ fun UserBasicInfo(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ProfileScreenPreview() {
-    SkillConnectTheme { ProfileScreen() }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun ProfileScreenPreview() {
+//    val authViewModel: AuthViewModel = viewModel()
+//    SkillConnectTheme { ProfileScreen(authViewModel = authViewModel) }
+//}

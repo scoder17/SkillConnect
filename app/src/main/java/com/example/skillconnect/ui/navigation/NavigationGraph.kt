@@ -146,7 +146,7 @@ fun NavigationGraph(
                 navController.navigate(Routes.SignInScreen.route) {
                     popUpTo(0)
                 }
-            })
+            }, authViewModel = authViewModel)
         }
 
         composable(Routes.FreelancerBasicDetailsScreen.route) {
