@@ -35,6 +35,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,19 +46,26 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skillconnect.ui.theme.SkillConnectTheme
 import com.example.skillconnect.R
+import com.example.skillconnect.model.FreelancerIncomeDetails
+import kotlin.math.min
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier, onLogOut: () -> Unit = {}) {
+    val profileScreenViewModel: ProfileScreenViewModel = viewModel()
+    val profileScreenUiState by profileScreenViewModel.uiState.collectAsState()
     Scaffold(
         topBar = { ProfileScreenTopBar(onLogOut = onLogOut) }
     ) {
         ProfileContent(
             modifier = Modifier
                 .padding(it)
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 8.dp),
+            profileScreenUiState = profileScreenUiState,
+            userWorkHistory = profileScreenViewModel.freelancerWorkHistory
         )
     }
 }
@@ -75,9 +84,11 @@ fun ProfileScreenTopBar(modifier: Modifier = Modifier, onLogOut: () -> Unit = {}
 }
 
 @Composable
-fun ProfileContent(modifier: Modifier = Modifier) {
-    val bannerImage = painterResource(id = R.drawable.banner)
-    val profileImage = painterResource(id = R.drawable.profile_image)
+fun ProfileContent(
+    modifier: Modifier = Modifier,
+    profileScreenUiState: ProfileScreenUiState,
+    userWorkHistory: List<FreelancerIncomeDetails> = listOf()
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -85,7 +96,7 @@ fun ProfileContent(modifier: Modifier = Modifier) {
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Image(
-                painter = bannerImage,
+                painter = painterResource(id = R.drawable.banner),
                 contentDescription = "banner",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -94,7 +105,7 @@ fun ProfileContent(modifier: Modifier = Modifier) {
             )
             Box(Modifier.padding(top = 80.dp)) {
                 Image(
-                    painter = profileImage,
+                    painter = painterResource(id = R.drawable.profile_image),
                     contentDescription = "Profile_image",
                     modifier = Modifier
                         .size(100.dp)
@@ -116,7 +127,13 @@ fun ProfileContent(modifier: Modifier = Modifier) {
         UserBasicInfo(
             modifier = Modifier
                 .padding(start = 15.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            userName = profileScreenUiState.name,
+            userLocation = profileScreenUiState.location,
+            userDescription = profileScreenUiState.bio,
+            userLinkedinId = profileScreenUiState.linkedIn,
+            userTwitterId = profileScreenUiState.twitter,
+            userGithubId = profileScreenUiState.github
         )
         Spacer(modifier = Modifier.size(10.dp))
         Spacer(
@@ -126,55 +143,45 @@ fun ProfileContent(modifier: Modifier = Modifier) {
                 .background(color = Color.Gray)
         )
         Spacer(modifier = Modifier.size(10.dp))
-        UserRatingAndProjectsDone(modifier = Modifier.padding(8.dp))
+        UserRatingAndProjectsDone(
+            modifier = Modifier.padding(8.dp),
+            userProjectsDone = profileScreenUiState.projectsDone,
+            userRating = profileScreenUiState.rating
+        )
         Spacer(modifier = Modifier.size(10.dp))
         UserAboutMe(
             modifier = Modifier.padding(8.dp),
-            aboutUser = "Hi my name is Gautam shorewala . I am a coding entuahuiast who likes coding and learning new things. I am a software engineer at google"
+            aboutUser = profileScreenUiState.aboutUser
         )
         Spacer(modifier = Modifier.size(10.dp))
         UserTechStack(modifier = Modifier.padding(8.dp))
         Spacer(modifier = Modifier.size(10.dp))
-        UserWorkHistory(modifier = Modifier.padding(8.dp))
+        UserWorkHistory(modifier = Modifier.padding(8.dp), userWorkHistory = userWorkHistory)
     }
 }
 
 
 @Composable
-fun UserWorkHistory(modifier: Modifier = Modifier) {
+fun UserWorkHistory(
+    modifier: Modifier = Modifier,
+    userWorkHistory: List<FreelancerIncomeDetails> = listOf()
+) {
     Column(modifier = modifier) {
         Text(text = "Work History", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.size(10.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.size(10.dp))
-        UserWorkProjectDetails(
-            rating = 4.0,
-            projectName = "Project 1",
-            projectDuration = "Dec 28,2023 - Feb 28,2024",
-            projectPayment = "1000",
-            modifier = Modifier.fillMaxWidth()
-        )
-        UserWorkProjectDetails(
-            rating = 4.0,
-            projectName = "Project 1",
-            projectDuration = "Dec 28,2023 - Feb 28,2024",
-            projectPayment = "1000",
-            modifier = Modifier.fillMaxWidth()
-        )
-        UserWorkProjectDetails(
-            rating = 4.0,
-            projectName = "Project 1",
-            projectDuration = "Dec 28,2023 - Feb 28,2024",
-            projectPayment = "1000",
-            modifier = Modifier.fillMaxWidth()
-        )
-        UserWorkProjectDetails(
-            rating = 4.0,
-            projectName = "Project 1",
-            projectDuration = "Dec 28,2023 - Feb 28,2024",
-            projectPayment = "1000",
-            modifier = Modifier.fillMaxWidth()
-        )
+        Column {
+            for (int in 0 until min(userWorkHistory.size, 4)) {
+                UserWorkProjectDetails(
+                    rating = userWorkHistory[int].rating,
+                    projectName = userWorkHistory[int].projectName,
+                    projectDuration = userWorkHistory[int].projectDuration,
+                    projectPayment = userWorkHistory[int].projectPayment
+                )
+
+            }
+        }
 
     }
 }
@@ -222,12 +229,24 @@ fun UserWorkProjectDetails(
 }
 
 @Composable
-fun UserRatingAndProjectsDone(modifier: Modifier = Modifier) {
+fun UserRatingAndProjectsDone(
+    modifier: Modifier = Modifier,
+    userRating: Double,
+    userProjectsDone: Int
+) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-        IconWithText(heading = "4.5", description = "Rating", icon = Icons.Default.Star)
+        IconWithText(
+            heading = userRating.toString(),
+            description = "Rating",
+            icon = Icons.Default.Star
+        )
         Spacer(modifier = Modifier.size(10.dp))
         VerticalDivider(Modifier.height(60.dp))
-        IconWithText(heading = "120", description = "Projects Done", icon = Icons.Outlined.FileOpen)
+        IconWithText(
+            heading = userProjectsDone.toString(),
+            description = "Projects Done",
+            icon = Icons.Outlined.FileOpen
+        )
     }
 }
 
@@ -309,12 +328,15 @@ fun IconWithText(
 }
 
 @Composable
-fun UserBasicInfo(modifier: Modifier = Modifier) {
-    val userName = "Gautam"
-    val userLocation = "San Francisco, CA"
-    val userDescription = "Software Engineer at Google"
-    val userLinkedinId = "Gautam_Shorewala"
-    val userTwitterId = "Gautam_Shorewala"
+fun UserBasicInfo(
+    modifier: Modifier = Modifier,
+    userName: String,
+    userLocation: String,
+    userDescription: String,
+    userLinkedinId: String,
+    userTwitterId: String,
+    userGithubId: String
+) {
     Column(modifier = modifier) {
         Text(text = userName, style = MaterialTheme.typography.titleLarge)
         Text(text = userDescription)
@@ -346,6 +368,16 @@ fun UserBasicInfo(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.size(4.dp))
             Text(text = userTwitterId)
+        }
+        Spacer(modifier = Modifier.size(8.dp))
+        Row {
+            Icon(
+                painter = painterResource(id = R.drawable.github),
+                contentDescription = "gitHub",
+                modifier = Modifier.size(25.dp)
+            )
+            Spacer(modifier = Modifier.size(4.dp))
+            Text(text = userGithubId)
         }
     }
 }
