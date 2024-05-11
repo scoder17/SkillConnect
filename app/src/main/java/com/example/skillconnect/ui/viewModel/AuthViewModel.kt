@@ -28,8 +28,10 @@ open class AuthViewModel @Inject constructor(
 
     init {
         val currentUser = auth.currentUser
+        Log.d("TAG", "init: $currentUser")
         viewModelScope.launch {
-            currentUser?.uid.let {
+            currentUser?.uid?.let {
+                Log.d("TAG", "init: $it")
                 getFreelancer(it ?: "").await()
             }
         }
