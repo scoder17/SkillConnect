@@ -35,6 +35,7 @@ import com.example.skillconnect.ui.screens.freelancer.formScreen.FreelancerFormS
 import com.example.skillconnect.ui.screens.freelancer.formScreen.SocialLinksFormScreen
 import com.example.skillconnect.ui.screens.freelancer.formScreen.TechDetailsFormScreen
 import com.example.skillconnect.ui.screens.freelancer.home.HomeScreen
+import com.example.skillconnect.ui.screens.freelancer.home.IncomeScreen
 import com.example.skillconnect.ui.screens.freelancer.message.MessageListScreen
 import com.example.skillconnect.ui.screens.freelancer.profile.ProfileScreen
 import com.example.skillconnect.ui.screens.freelancer.project.ProjectScreen
@@ -138,6 +139,11 @@ fun NavigationGraph(
         composable("projectScreen") {
             onBottomBarVisibilityChanged(true)
             ProjectScreen()
+        }
+
+        composable("incomeScreen") {
+            onBottomBarVisibilityChanged(true)
+            IncomeScreen()
         }
 
         composable("messageListScreen") {

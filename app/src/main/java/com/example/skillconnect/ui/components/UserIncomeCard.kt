@@ -1,5 +1,6 @@
 package com.example.connectly.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +33,8 @@ fun UserIncomeCard(
     display: String,
     dispMonth: Boolean,
     incomeLastMonth: Double,
-    incomeIncrease: Double
+    incomeIncrease: Double,
+    onClick: () -> Unit = {}
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -42,6 +44,7 @@ fun UserIncomeCard(
     ) {
         Column(
             modifier = Modifier
+                .clickable { onClick() }
 //                .fillMaxSize()
                 .fillMaxWidth(0.60f)
                 .padding(top = 16.dp, bottom = 16.dp, start = 20.dp, end = 20.dp),

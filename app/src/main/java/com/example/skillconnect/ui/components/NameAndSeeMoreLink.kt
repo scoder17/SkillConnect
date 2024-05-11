@@ -53,7 +53,7 @@ fun NameAndSeeMoreLink(
             )
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { onClickSeeMore() },
                 contentPadding = PaddingValues(4.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
