@@ -4,7 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -38,14 +40,17 @@ fun TitleValueCard(
     )
         {
         Column(
-            modifier = Modifier.padding(16.dp).width(100.dp)
+            modifier = Modifier
+                .padding(16.dp)
+                .width(100.dp)
         ) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                fontSize = 12.sp,
+                fontSize = 13.sp,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.height(10.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -54,6 +59,7 @@ fun TitleValueCard(
                 Text(
                     text = value,
                     style = MaterialTheme.typography.labelMedium,
+                    fontSize = 14.sp,
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }

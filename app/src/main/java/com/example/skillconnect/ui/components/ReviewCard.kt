@@ -53,7 +53,7 @@ fun ReviewCard(
                 .padding(16.dp)
 //                .fillMaxWidth(0.40f)
 //                .height(130.dp)
-                .width(140.dp)
+                .width(150.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),

@@ -92,7 +92,12 @@ fun HomeScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            UserIncomeCard(user = "Aman", incomeLastMonth = 5000.00, incomeIncrease = 1.06)
+            UserIncomeCard(user = "Aman",
+                incomeLastMonth = 5000.00,
+                display = "Earnings",
+                dispMonth = true,
+                incomeIncrease = 1.06
+            )
 //            Spacer(modifier = Modifier.width(10.dp))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -137,7 +142,7 @@ fun HomeScreen(
             seeMore = "",
             onClickSeeMore = {}
         )
-        Spacer(modifier = Modifier.height(10.dp))
+//        Spacer(modifier = Modifier.height(10.dp))
         Row(
             modifier= Modifier
                 .fillMaxWidth()
