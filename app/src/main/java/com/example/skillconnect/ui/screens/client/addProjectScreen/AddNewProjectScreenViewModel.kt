@@ -23,4 +23,16 @@ class AddNewProjectScreenViewModel : ViewModel() {
     fun updateDeadline(deadline: String) {
         _uiState.update { currentState -> currentState.copy(deadline = deadline) }
     }
+    fun updateSkills(skills: String) {
+
+    }
+    fun removeSkills(skills: String) {
+
+    }
+    fun updateExperience(experience: Number) {
+
+    }
+    fun jobRequired(jobRequirements: String) {
+
+    }
 }
