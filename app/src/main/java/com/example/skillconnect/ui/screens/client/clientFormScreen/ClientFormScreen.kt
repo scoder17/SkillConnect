@@ -20,6 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.skillconnect.R
+import com.example.skillconnect.ui.navigation.Routes
+import com.example.skillconnect.ui.screens.freelancer.formScreen.BasicDetailsFormScreen
 import com.example.skillconnect.ui.theme.SkillConnectTheme
 
 
@@ -43,43 +45,22 @@ fun ClientFormScreenTopBar(modifier: Modifier = Modifier) {
 fun ClientFormScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
+    clientFormScreenViewModel: ClientFormScreenViewModel = viewModel()
 ) {
-    val clientFormScreenViewModel: ClientFormScreenViewModel = viewModel()
     val clientFormScreenUiState by clientFormScreenViewModel.uiState.collectAsState()
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = FreelancerFormScreenType.valueOf(
-        backStackEntry?.destination?.route ?: FreelancerFormScreenType.ClientBasicDetails.name
+    BasicDetailsFormScreen(
+        modifier = Modifier.fillMaxSize(),
+        onNextButtonClicked = { navController.navigate(Routes.ClientSocialLinksScreen.route) },
+        name = clientFormScreenUiState.name,
+        onNameChange = { clientFormScreenViewModel.updateName(it) },
+        emailId = clientFormScreenUiState.email,
+        onEmailChange = { clientFormScreenViewModel.updateEmail(it) },
+        password = clientFormScreenUiState.password,
+        onPasswordChange = { clientFormScreenViewModel.updatePassword(it) },
+        confirmPassword = clientFormScreenUiState.confirmPassword,
+        onConfirmPasswordChange = { clientFormScreenViewModel.updateConfirmPassword(it) },
     )
-    Scaffold(
-        topBar = { ClientFormScreenTopBar() }
-    ) {
-        NavHost(
-            navController = navController,
-            startDestination = FreelancerFormScreenType.ClientBasicDetails.name,
-            modifier = Modifier.padding(it)
 
-        ) {
-            composable(FreelancerFormScreenType.ClientBasicDetails.name) {
-                ClientBasicDetailsFormScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    onNextButtonClicked = { navController.navigate(FreelancerFormScreenType.ClientSocialLinks.name) },
-                    name = clientFormScreenUiState.name,
-                    onNameChange = { clientFormScreenViewModel.updateName(it) },
-                    emailId = clientFormScreenUiState.email,
-                    onEmailChange = { clientFormScreenViewModel.updateEmail(it) },
-                )
-            }
-            composable(FreelancerFormScreenType.ClientSocialLinks.name) {
-                ClientSocialLinksFormScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    onSubmitButtonClicked = { navController.navigate(FreelancerFormScreenType.ClientBasicDetails.name) },
-                    onBackButtonClicked = { navController.navigate(FreelancerFormScreenType.ClientBasicDetails.name) },
-                    linkedIn = clientFormScreenUiState.linkedIn,
-                    onLinkedInChange = {clientFormScreenViewModel.updateLinkedIn(it)},
-                    twitter = clientFormScreenUiState.twitter,
-                    onTwitterChange = {clientFormScreenViewModel.updateTwitter(it)},
-                )
-            }
 //            composable(FreelancerFormScreenType.ClientTechDetails.name) {
 //                TechDetailsFormScreen(
 //                    modifier = Modifier.fillMaxSize(),
@@ -93,8 +74,7 @@ fun ClientFormScreen(
 //                )
 //
 //            }
-        }
-    }
+
 }
 
 @Preview

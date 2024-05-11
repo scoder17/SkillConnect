@@ -1,4 +1,4 @@
-package com.example.skillconnect.ui.screens.freelancer.signIn
+package com.example.skillconnect.ui.screens.client.signIn
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +26,7 @@ import com.example.skillconnect.ui.navigation.Routes
 import com.example.skillconnect.ui.viewModel.AuthViewModel
 
 @Composable
-fun SignInScreen(
+fun ClientSignInScreen(
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel = hiltViewModel(),
     navigateTo: (String) -> Unit
@@ -50,9 +50,9 @@ fun SignInScreen(
             )
             Button(
                 onClick = {
-                    viewModel.signIn(email.text, password.text)
-                    if (viewModel.checkIfLoggedIn()) {
-                        navigateTo(Routes.HomeScreen.route)
+                    viewModel.signInClient(email.text, password.text)
+                    if (viewModel.checkIfClientLoggedIn()) {
+                        navigateTo(Routes.ClientHomeScreen.route)
                     }
                 },
                 enabled = email.text.isNotEmpty() && password.text.isNotEmpty()
@@ -66,7 +66,7 @@ fun SignInScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .clickable {
-                        navigateTo(Routes.FreelancerSignUpScreen.route)
+                        navigateTo(Routes.ClientSignUpScreen.route)
                     }
             )
         }
@@ -94,5 +94,5 @@ fun CircularProgress(modifier: Modifier = Modifier) {
 @Composable
 private fun SignInScreenPreview() {
     val viewModel: AuthViewModel = hiltViewModel()
-    SignInScreen(viewModel = viewModel, navigateTo = {})
+
 }

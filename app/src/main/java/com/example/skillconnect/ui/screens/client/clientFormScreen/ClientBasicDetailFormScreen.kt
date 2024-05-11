@@ -29,7 +29,11 @@ fun ClientBasicDetailsFormScreen(
     name: String,
     onNameChange: (String) -> Unit,
     emailId: String,
-    onEmailChange: (String) -> Unit
+    onEmailChange: (String) -> Unit,
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    confirmPassword: String,
+    onConfirmPasswordChange: (String) -> Unit,
 ) {
     Column(
         modifier = modifier
