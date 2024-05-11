@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.skillconnect.ui.bottombar.BottomBar
 import com.example.skillconnect.ui.navigation.NavigationGraph
+import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientFormScreenViewModel
 import com.example.skillconnect.ui.screens.freelancer.formScreen.FormScreenViewModel
 import com.example.skillconnect.ui.theme.SkillConnectTheme
 import com.example.skillconnect.ui.viewModel.AuthViewModel
@@ -35,6 +36,7 @@ class MainActivity : ComponentActivity() {
                 val navController: NavHostController = rememberNavController()
                 val authViewModel: AuthViewModel by viewModels()
                 val formScreenViewModel: FormScreenViewModel by viewModels()
+                val clientFormScreenViewModel: ClientFormScreenViewModel by viewModels()
 
                 Scaffold(
                     modifier = Modifier
@@ -65,7 +67,8 @@ class MainActivity : ComponentActivity() {
                         NavigationGraph(
                             navController = navController,
                             authViewModel = authViewModel,
-                            formScreenViewModel = formScreenViewModel
+                            formScreenViewModel = formScreenViewModel,
+                            clientFormScreenViewModel = clientFormScreenViewModel
                         ) { isVisible ->
                             // Update the visibility state of the bottom bar
                             buttonsVisible = isVisible

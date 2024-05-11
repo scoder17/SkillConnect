@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.skillconnect.data.CLIENT_NODE
 import com.example.skillconnect.data.FREELANCER_NODE
+import com.example.skillconnect.model.ClientData
 import com.example.skillconnect.model.FreeLancerData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,18 +28,21 @@ open class AuthViewModel @Inject constructor(
     var inProgress by mutableStateOf(false)
     var currentfreelancer by mutableStateOf<FreeLancerData?>(null)
 
+    private val isClientLoggedIn = mutableStateOf(false)
+    var currentClient by mutableStateOf<ClientData?>(null)
+
     init {
         val currentUser = auth.currentUser
-        Log.d("TAG", "init: $currentUser")
         viewModelScope.launch {
             currentUser?.uid?.let {
-                Log.d("TAG", "init: $it")
-                getFreelancer(it ?: "").await()
+                getFreelancer(it).await()
             }
         }
-        isLoggedIn.value = currentUser != null
-        Log.d("TAG", "init: $currentfreelancer")
-
+        viewModelScope.launch {
+            currentUser?.uid?.let {
+                getClient(it).await()
+            }
+        }
 
     }
 
@@ -59,6 +64,26 @@ open class AuthViewModel @Inject constructor(
                 inProgress = false
                 Log.e("TAG", "signIn: signin failed ${it.localizedMessage}")
             }
+    }
+
+     fun signInClient(email: String, password: String) {
+        inProgress = true
+        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+            Log.d(
+                "TAG",
+                "signIn: signin success"
+            )
+            inProgress = false
+            isClientLoggedIn.value = true
+        }
+            .addOnFailureListener {
+                inProgress = false
+                Log.e("TAG", "signIn: signin failed ${it.localizedMessage}")
+            }
+    }
+
+    fun checkIfClientLoggedIn(): Boolean {
+        return isClientLoggedIn.value
     }
 
 
@@ -93,6 +118,33 @@ open class AuthViewModel @Inject constructor(
             }
     }
 
+    fun signUpClient(
+        name: String,
+        email: String,
+        password: String,
+        linkedIn: String,
+        twitter: String
+    ) {
+        inProgress = true
+        auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
+            val client = ClientData(
+                id = it.user?.uid ?: "",
+                name = name,
+                email = email,
+                password = password,
+                profileImage = it.user?.photoUrl.toString(),
+                linkedIn = linkedIn,
+                twitter = twitter
+            )
+            Log.d("TAG", "signUp:$client ")
+            createOrUpdateClient(client)
+        }
+            .addOnFailureListener {
+                inProgress = false
+                Log.e("TAG", "signUp: signup failed")
+            }
+    }
+
 
     private fun createOrUpdateProfile(freelancer: FreeLancerData) {
 
@@ -110,6 +162,23 @@ open class AuthViewModel @Inject constructor(
             }
     }
 
+    private fun createOrUpdateClient(client: ClientData) {
+        db.collection(CLIENT_NODE).document(client.id).get().addOnSuccessListener {
+            if (it.exists()) {
+                db.collection(CLIENT_NODE).document(client.id).set(client)
+            } else {
+                db.collection(CLIENT_NODE).document(client.id).set(client)
+                inProgress = false
+            }
+        }
+            .addOnFailureListener {
+                inProgress = false
+                Log.e("TAG", "createOrUpdateProfile: cannot retrieve user")
+            }
+
+    }
+
+
     private fun getFreelancer(id: String): Deferred<Unit> {
         inProgress = true
         return viewModelScope.async {
@@ -120,11 +189,32 @@ open class AuthViewModel @Inject constructor(
                 }
                 if (value != null) {
                     currentfreelancer = value.toObject(FreeLancerData::class.java)
+                    isLoggedIn.value = true
                     Log.d("TAG", "getFreelancer: $currentfreelancer")
                     inProgress = false
                 }
             }
         }
+    }
+
+    private fun getClient(id: String): Deferred<Unit> {
+        inProgress = true
+
+        return viewModelScope.async {
+            db.collection(CLIENT_NODE).document(id).addSnapshotListener { value, error ->
+                if (error != null) {
+                    inProgress = false
+                    Log.e("TAG", "getFreelancer: ${error.localizedMessage}")
+                }
+                if (value != null) {
+                    currentClient = value.toObject(ClientData::class.java)
+                    isClientLoggedIn.value = true
+                    Log.d("TAG", "getFreelancer: $currentClient")
+                    inProgress = false
+                }
+            }
+        }
+
     }
 
     fun logout() {

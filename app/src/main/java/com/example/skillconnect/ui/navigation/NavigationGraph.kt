@@ -19,6 +19,11 @@ import androidx.navigation.compose.composable
 import com.example.skillconnect.R
 import com.example.skillconnect.ui.screens.client.home.ClientHomeScreen
 import com.example.skillconnect.ui.screens.client.searchScreen.ClientSearchScreen
+import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientBasicDetailsFormScreen
+import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientFormScreen
+import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientFormScreenViewModel
+import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientSocialLinksFormScreen
+import com.example.skillconnect.ui.screens.client.signIn.ClientSignInScreen
 import com.example.skillconnect.ui.screens.freelancer.formScreen.BasicDetailsFormScreen
 import com.example.skillconnect.ui.screens.freelancer.formScreen.FormScreenViewModel
 import com.example.skillconnect.ui.screens.freelancer.formScreen.FreelancerFormScreen
@@ -39,9 +44,11 @@ fun NavigationGraph(
     navController: NavHostController,
     authViewModel: AuthViewModel,
     formScreenViewModel: FormScreenViewModel,
+    clientFormScreenViewModel: ClientFormScreenViewModel,
     onBottomBarVisibilityChanged: (Boolean) -> Unit
 ) {
     val formScreenUiState by formScreenViewModel.uiState.collectAsState()
+    val clientFormScreenUiState by clientFormScreenViewModel.uiState.collectAsState()
     NavHost(navController = navController, startDestination = "welcomeScreen") {
 
         composable("welcomeScreen") {
@@ -69,11 +76,24 @@ fun NavigationGraph(
             SignInScreen(viewModel = authViewModel, navigateTo = { navController.navigate(it) })
         }
 
+        composable(Routes.ClientSignInScreen.route) {
+            onBottomBarVisibilityChanged(false)
+            ClientSignInScreen(
+                viewModel = authViewModel,
+                navigateTo = { navController.navigate(it) })
+        }
         composable("signUpScreen") {
             onBottomBarVisibilityChanged(false)
             FreelancerFormScreen(
                 navController = navController,
                 formScreenViewModel = formScreenViewModel
+            )
+        }
+        composable(Routes.ClientSignUpScreen.route) {
+            onBottomBarVisibilityChanged(false)
+            ClientFormScreen(
+                navController = navController,
+                clientFormScreenViewModel = clientFormScreenViewModel
             )
         }
 
@@ -180,6 +200,43 @@ fun NavigationGraph(
             )
 
         }
+        composable(Routes.ClientBasicDetailsScreen.route) {
+            BasicDetailsFormScreen(
+                modifier = Modifier.fillMaxSize(),
+                onNextButtonClicked = { navController.navigate(Routes.ClientSocialLinksScreen.route) },
+                name = clientFormScreenUiState.name,
+                onNameChange = { clientFormScreenViewModel.updateName(it) },
+                emailId = clientFormScreenUiState.email,
+                onEmailChange = { clientFormScreenViewModel.updateEmail(it) },
+                password = clientFormScreenUiState.password,
+                onPasswordChange = { clientFormScreenViewModel.updatePassword(it) },
+                confirmPassword = clientFormScreenUiState.confirmPassword,
+                onConfirmPasswordChange = { clientFormScreenViewModel.updateConfirmPassword(it) },
+            )
+        }
+        composable(Routes.ClientSocialLinksScreen.route) {
+            ClientSocialLinksFormScreen(
+                modifier = Modifier.fillMaxSize(),
+                onSubmitButtonClicked = {
+                    authViewModel.signUpClient(
+                        name = clientFormScreenUiState.name,
+                        email = clientFormScreenUiState.email,
+                        linkedIn = clientFormScreenUiState.linkedIn,
+                        twitter = clientFormScreenUiState.twitter,
+                        password = clientFormScreenUiState.password
+                    )
+                    navController.navigate(Routes.ClientSignInScreen.route)
+                },
+                onBackButtonClicked = {
+                    navController.navigate(Routes.ClientBasicDetailsScreen.route)
+                },
+                linkedIn = clientFormScreenUiState.linkedIn,
+                twitter = clientFormScreenUiState.twitter,
+                onLinkedInChange = { clientFormScreenViewModel.updateLinkedIn(it) },
+                onTwitterChange = { clientFormScreenViewModel.updateTwitter(it) },
+            )
+        }
+
 
     }
 }
