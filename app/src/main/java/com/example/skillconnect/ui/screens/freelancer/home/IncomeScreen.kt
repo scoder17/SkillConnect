@@ -90,23 +90,6 @@ fun ProjectIncomeDetails(
             }
             Column {
                 Text(text = "$${projectPayment}", style = MaterialTheme.typography.titleLarge)
-                Row {
-                    for (int in 1..rating.toInt())
-                        Icon(
-                            imageVector = Icons.Outlined.Star,
-                            contentDescription = "Star",
-                            modifier = Modifier.size(25.dp),
-                            tint = Color.Yellow
-                        )
-                    for (int in (rating + 1).toInt()..5)
-                        Icon(
-                            imageVector = Icons.Outlined.StarBorder,
-                            contentDescription = "Star",
-                            modifier = Modifier.size(25.dp),
-                        )
-                    Text(text = rating.toString())
-                }
-
             }
 
         }

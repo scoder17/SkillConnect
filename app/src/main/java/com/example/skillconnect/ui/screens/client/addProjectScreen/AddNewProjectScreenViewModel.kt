@@ -24,15 +24,20 @@ class AddNewProjectScreenViewModel : ViewModel() {
         _uiState.update { currentState -> currentState.copy(deadline = deadline) }
     }
     fun updateSkills(skills: String) {
-
+        _uiState.update { currentState -> currentState.copy(skills = currentState.skills+skills) }
     }
-    fun removeSkills(skills: String) {
-
-    }
-    fun updateExperience(experience: Number) {
-
+    fun removeSkills(index: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(skills = currentState.skills.toMutableList().apply { removeAt(index) })
+        }
     }
     fun jobRequired(jobRequirements: String) {
-
+        _uiState.update { currentState -> currentState.copy(jobRequirements = jobRequirements) }
+    }
+    fun updateAboutClient(aboutClient: String) {
+        _uiState.update { currentState -> currentState.copy(aboutClient = aboutClient) }
+    }
+    fun updateRolesAndResponsibilities(rolesAndResponsibilities: String) {
+        _uiState.update { currentState -> currentState.copy(rolesAndResponsibilities = rolesAndResponsibilities) }
     }
 }

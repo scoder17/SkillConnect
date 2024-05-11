@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.skillconnect.ui.bottombar.BottomBar
 import com.example.skillconnect.ui.navigation.NavigationGraph
+import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreenViewModel
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientFormScreenViewModel
 import com.example.skillconnect.ui.screens.freelancer.formScreen.FormScreenViewModel
 import com.example.skillconnect.ui.theme.SkillConnectTheme
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 val authViewModel: AuthViewModel by viewModels()
                 val formScreenViewModel: FormScreenViewModel by viewModels()
                 val clientFormScreenViewModel: ClientFormScreenViewModel by viewModels()
-
+                val addNewProjectScreenViewModel: AddNewProjectScreenViewModel by viewModels()
                 Scaffold(
                     modifier = Modifier
                         .fillMaxSize(),
@@ -68,7 +69,8 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             authViewModel = authViewModel,
                             formScreenViewModel = formScreenViewModel,
-                            clientFormScreenViewModel = clientFormScreenViewModel
+                            clientFormScreenViewModel = clientFormScreenViewModel,
+                            addNewProjectScreenViewModel = addNewProjectScreenViewModel
                         ) { isVisible ->
                             // Update the visibility state of the bottom bar
                             buttonsVisible = isVisible
