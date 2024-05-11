@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.connectly.ui.screens.freelancer.home.HomeScreen
 import com.example.skillconnect.ui.screens.welcome.GetStartedScreen
 import com.example.skillconnect.ui.screens.welcome.WelcomeScreen
 
@@ -20,6 +21,11 @@ fun NavigationGraph(navController: NavHostController, onBottomBarVisibilityChang
         composable("getStartedScreen") {
             onBottomBarVisibilityChanged(false)
             GetStartedScreen(navController = navController)
+        }
+
+        composable("homeScreen") {
+            onBottomBarVisibilityChanged(true)
+            HomeScreen()
         }
 
     }
