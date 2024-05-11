@@ -100,7 +100,8 @@ fun TechSkill(
         modifier = Modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions(imeAction = imeAction),
         singleLine = true,
-        trailingIcon = { Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete", modifier = Modifier.clickable { onSkillRemoved(skillCount)})}
+
+        trailingIcon = { if(skillCount!=0)Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete", modifier = Modifier.clickable {{onSkillRemoved(skillCount)}})}
         )
 
     Spacer(modifier = Modifier.size(20.dp))
