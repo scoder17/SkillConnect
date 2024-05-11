@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,8 +18,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.skillconnect.ui.bottombar.BottomBar
 import com.example.skillconnect.ui.navigation.NavigationGraph
+import com.example.skillconnect.ui.screens.freelancer.formScreen.FormScreenViewModel
 import com.example.skillconnect.ui.theme.SkillConnectTheme
+import com.example.skillconnect.ui.viewModel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +33,8 @@ class MainActivity : ComponentActivity() {
 
                 var buttonsVisible by remember { mutableStateOf(false) }
                 val navController: NavHostController = rememberNavController()
+                val authViewModel: AuthViewModel by viewModels()
+                val formScreenViewModel: FormScreenViewModel by viewModels()
 
                 Scaffold(
                     modifier = Modifier
@@ -54,7 +61,11 @@ class MainActivity : ComponentActivity() {
 //                            contentScale = ContentScale.FillBounds
 //                        )
                         // Pass the lambda to NavigationGraph
-                        NavigationGraph(navController = navController) { isVisible ->
+                        NavigationGraph(
+                            navController = navController,
+                            authViewModel = authViewModel,
+                            formScreenViewModel = formScreenViewModel
+                        ) { isVisible ->
                             // Update the visibility state of the bottom bar
                             buttonsVisible = isVisible
                         }

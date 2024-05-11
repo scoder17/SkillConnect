@@ -210,7 +210,7 @@ fun GetStartedScreen(navController: NavHostController) {
 
         Button(
             onClick = {
-                navController.navigate(Routes.HomeScreen.route)
+                navController.navigate(Routes.SignInScreen.route)
             },
             modifier = Modifier
                 .fillMaxWidth()
