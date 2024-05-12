@@ -22,11 +22,11 @@ sealed class ClientBottomBarItem (
         icon = Icons.Default.Search,
         route = "clientSearchScreen"
     )
-    object MessageListScreen : ClientBottomBarItem(
-        label = "Messages",
-        icon = Icons.Default.Message,
-        route ="messageListScreen"
-    )
+//    object MessageListScreen : ClientBottomBarItem(
+//        label = "Messages",
+//        icon = Icons.Default.Message,
+//        route ="messageListScreen"
+//    )
     object ProfileScreen: ClientBottomBarItem(
         label = "Profile",
         icon = Icons.Default.Person,

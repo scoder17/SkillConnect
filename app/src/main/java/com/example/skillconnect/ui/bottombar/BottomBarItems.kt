@@ -24,11 +24,11 @@ sealed class BottomBarItem (
         icon = Icons.Default.Search,
         route = "searchScreen"
     )
-    object MessageListScreen : BottomBarItem(
-        label = "Messages",
-        icon = Icons.Default.Message,
-        route ="messageListScreen"
-    )
+//    object MessageListScreen : BottomBarItem(
+//        label = "Messages",
+//        icon = Icons.Default.Message,
+//        route ="messageListScreen"
+//    )
     object ProfileScreen: BottomBarItem(
         label = "Profile",
         icon = Icons.Default.Person,

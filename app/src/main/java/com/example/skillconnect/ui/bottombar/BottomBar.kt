@@ -28,14 +28,14 @@ fun BottomBar(
     val screens = listOf(
         BottomBarItem.HomeScreen,
         BottomBarItem.ProjectScreen,
-        BottomBarItem.MessageListScreen,
+//        BottomBarItem.MessageListScreen,
         BottomBarItem.ProfileScreen,
     )
 
     val clientScreens = listOf(
         ClientBottomBarItem.HomeScreen,
         ClientBottomBarItem.ProjectScreen,
-        ClientBottomBarItem.MessageListScreen,
+//        ClientBottomBarItem.MessageListScreen,
         ClientBottomBarItem.ProfileScreen,
     )
 
@@ -103,6 +103,5 @@ fun BottomBar(
                 )
             }
         }
-
     }
 }
