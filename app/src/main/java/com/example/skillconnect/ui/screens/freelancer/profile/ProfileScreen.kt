@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -45,8 +46,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.skillconnect.ui.theme.SkillConnectTheme
 import com.example.skillconnect.R
@@ -115,7 +119,7 @@ fun ProfileContent(
                     .height(150.dp),
                 contentScale = ContentScale.FillWidth
             )
-            Box(Modifier.padding(top = 80.dp)) {
+            Box(Modifier.padding(top = 85.dp, start = 10.dp)) {
                 Image(
                     painter = painterResource(id = R.drawable.profile_image),
                     contentDescription = "Profile_image",
@@ -150,7 +154,8 @@ fun ProfileContent(
         Spacer(modifier = Modifier.size(10.dp))
         Spacer(
             modifier = Modifier
-                .height(14.dp)
+                .height(1.dp)
+                .clip(RoundedCornerShape(100))
                 .fillMaxWidth()
                 .background(color = Color.Gray)
         )
@@ -179,7 +184,11 @@ fun UserWorkHistory(
     userWorkHistory: List<FreelancerIncomeDetails> = listOf()
 ) {
     Column(modifier = modifier) {
-        Text(text = "Work History", style = MaterialTheme.typography.titleLarge)
+        Text(
+            text = "Work History",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.SemiBold
+        )
         Spacer(modifier = Modifier.size(10.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.size(10.dp))
@@ -207,29 +216,47 @@ fun UserWorkProjectDetails(
     projectPayment: String
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column {
-            Text(text = projectName, style = MaterialTheme.typography.titleLarge)
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = projectName,
+                style = MaterialTheme.typography.bodyLarge,
+                fontSize = 18.sp,
+            )
+            Spacer(modifier = Modifier.height(5.dp))
             Text(text = projectDuration, style = MaterialTheme.typography.bodyMedium)
         }
-        Column {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.End
+        ) {
             Text(text = "$${projectPayment}", style = MaterialTheme.typography.titleLarge)
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+
+                ) {
                 for (int in 1..rating.toInt())
                     Icon(
                         imageVector = Icons.Outlined.Star,
                         contentDescription = "Star",
-                        modifier = Modifier.size(25.dp),
+                        modifier = Modifier.size(18.dp),
                     )
                 for (int in (rating + 1).toInt()..5)
                     Icon(
                         imageVector = Icons.Outlined.StarBorder,
                         contentDescription = "Star",
-                        modifier = Modifier.size(25.dp),
+                        modifier = Modifier.size(18.dp),
                     )
+                Spacer(modifier = Modifier.width(5.dp))
                 Text(text = rating.toString())
             }
 
@@ -252,7 +279,6 @@ fun UserRatingAndProjectsDone(
             description = "Rating",
             icon = Icons.Default.Star
         )
-        Spacer(modifier = Modifier.size(10.dp))
         VerticalDivider(Modifier.height(60.dp))
         IconWithText(
             heading = userProjectsDone.toString(),
@@ -265,7 +291,12 @@ fun UserRatingAndProjectsDone(
 @Composable
 fun UserAboutMe(modifier: Modifier = Modifier, aboutUser: String) {
     Column(modifier = modifier) {
-        Text(text = "About Me", style = MaterialTheme.typography.titleLarge)
+        Text(
+            text = "About Me",
+            style = MaterialTheme.typography.bodyLarge,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.SemiBold
+        )
         Spacer(modifier = Modifier.size(10.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.size(10.dp))
@@ -277,7 +308,10 @@ fun UserAboutMe(modifier: Modifier = Modifier, aboutUser: String) {
 @Composable
 fun UserTechStack(modifier: Modifier = Modifier, currentFreelancer: FreeLancerData) {
     Column(modifier = modifier) {
-        Text(text = "Tech Stack", style = MaterialTheme.typography.titleLarge)
+        Text(
+            text = "Tech Stack",
+            style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold
+        )
         Spacer(modifier = Modifier.size(10.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.size(10.dp))
@@ -306,17 +340,39 @@ fun IconWithText(
     description: String,
     icon: ImageVector
 ) {
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        Icon(
-            imageVector = icon,
-            contentDescription = "Star",
-            modifier = Modifier.size(25.dp),
+//    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+//        Icon(
+//            imageVector = icon,
+//            contentDescription = "Star",
+//            modifier = Modifier.size(25.dp),
+//
+//            )
+//        Text(text = heading, style = MaterialTheme.typography.titleLarge)
+////        Spacer(modifier = Modifier.size(10.dp))
+//        Column {
+//            Text(text = description)
+//        }
+//    }
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start
+    ) {
+        Text(
+            text = description,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = modifier.height(10.dp))
+        Row(
 
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = "Star",
+                modifier = Modifier.size(25.dp),
             )
-        Spacer(modifier = Modifier.size(10.dp))
-        Column {
+            Spacer(modifier = Modifier.width(7.dp))
             Text(text = heading, style = MaterialTheme.typography.titleLarge)
-            Text(text = description)
         }
     }
 }
@@ -331,17 +387,34 @@ fun UserBasicInfo(
     userTwitterId: String,
     userGithubId: String
 ) {
-    Column(modifier = modifier) {
-        Text(text = userName, style = MaterialTheme.typography.titleLarge)
-        Text(text = userDescription)
+    Column(
+        horizontalAlignment = Alignment.Start, modifier = modifier
+    ) {
+        Text(
+            text = userName,
+            style = MaterialTheme.typography.titleLarge,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(bottom = 5.dp)
+        )
+
+        Text(
+            text = userDescription,
+            style = MaterialTheme.typography.bodyLarge,
+            fontSize = 16.sp
+        )
         Spacer(modifier = Modifier.size(8.dp))
-        Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 imageVector = Icons.Default.LocationOn,
                 contentDescription = "user location"
             )
             Spacer(modifier = Modifier.size(4.dp))
-            Text(text = userLocation)
+            Text(
+                text = userLocation,
+                style = MaterialTheme.typography.labelLarge,
+                fontSize = 14.sp
+            )
         }
         Spacer(modifier = Modifier.size(8.dp))
         Row {
@@ -376,7 +449,7 @@ fun UserBasicInfo(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
     SkillConnectTheme { ProfileScreen() }
