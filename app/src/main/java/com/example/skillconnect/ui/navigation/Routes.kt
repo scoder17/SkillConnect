@@ -9,6 +9,10 @@ sealed class Routes(val route: String) {
     data object ClientSearchScreen : Routes("clientSearchScreen")
     data object MessageListScreen : Routes("messageListScreen")
     data object ProjectScreen : Routes("projectScreen")
+    data object ClientProjectScreen : Routes("clientProjectScreen")
+    data object ClientProfileScreen : Routes("clientProfileScreen")
+
+
     data object ProfileScreen : Routes("profileScreen")
     data object SignInScreen : Routes("signInScreen")
     data object ClientSignInScreen : Routes("clientSignInScreen")
@@ -20,6 +24,7 @@ sealed class Routes(val route: String) {
     data object ClientBasicDetailsScreen : Routes("clientBasicDetailsScreen")
     data object ClientSocialLinksScreen : Routes("clientSocialLinksScreen")
     data object IncomeScreen : Routes("incomeScreen")
+    data object ClientIncomeScreen : Routes("clientIncomeScreen")
 
 
     data object AddNewProjectScreen : Routes("addNewProjectScreen")

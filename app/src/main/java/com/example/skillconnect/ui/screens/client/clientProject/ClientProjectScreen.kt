@@ -209,8 +209,8 @@ fun ProjectListItem(
         )
         HorizontalDivider()
         ProjectListItemBottom(
-            title = if (projectStatus != "Completed") deadlineDate else "Completed",
-            description = if (projectStatus == "Completed") deadlineDate else "deadline",
+            title = if (projectStatus == "Completed") deadlineDate else "deadline",
+            description = if (projectStatus != "Completed") deadlineDate else "Completed",
             payment = payment,
             modifier = Modifier
                 .fillMaxWidth()

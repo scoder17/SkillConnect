@@ -130,7 +130,7 @@ fun GetStartedScreen(navController: NavHostController) {
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { change, dragAmount ->
                     change.consumeAllChanges()
-                    val threshold = 75.dp
+                    val threshold = 50.dp
                     if (dragAmount.dp < -threshold && currentIndex < images.size - 1) {
                         currentIndex = (currentIndex + 1) % images.size
                     } else if (dragAmount.dp > threshold && currentIndex > 0) {

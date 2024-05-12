@@ -65,7 +65,7 @@ fun ClientHomeScreen(
 ) {
     Scaffold(floatingActionButton = {
         FloatingActionButton(
-            onClick = { /*TODO*/ },
+            onClick = { navigateToNext("addNewProjectScreen") },
             containerColor = Color(0xFF378805)
         ) {
             Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add", tint = Color.White);
@@ -90,7 +90,8 @@ fun ClientHomeScreen(
                     incomeLastMonth = 5000.00,
                     display = "Expense",
                     dispMonth = false,
-                    incomeIncrease = 1.06
+                    incomeIncrease = 1.06,
+                    onClick = {navigateToNext("clientIncomeScreen")}
                 )
 //            Spacer(modifier = Modifier.width(10.dp))
                 Column(
@@ -110,9 +111,9 @@ fun ClientHomeScreen(
 
 //Ongoing Projects
             NameAndSeeMoreLink(
-                name = "Ongoing Projects",
+                name = "Projects",
                 seeMore = "See More",
-                onClickSeeMore = {}
+                onClickSeeMore = {navigateToNext("clientProjectScreen")}
             )
 //        Spacer(modifier = Modifier.height(10.dp))
             Row(

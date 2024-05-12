@@ -6,7 +6,6 @@ import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.skillconnect.ui.bottomBar.BottomBarItem
 
 sealed class ClientBottomBarItem (
     val label: String,
@@ -31,7 +30,7 @@ sealed class ClientBottomBarItem (
     object ProfileScreen: ClientBottomBarItem(
         label = "Profile",
         icon = Icons.Default.Person,
-        route ="profileScreen"
+        route ="clientProfileScreen"
     )
 }
 
