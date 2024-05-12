@@ -20,6 +20,7 @@ import com.example.skillconnect.R
 import com.example.skillconnect.model.FreeLancerData
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen2
+import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen3
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreenUIState
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreenViewModel
 import com.example.skillconnect.ui.screens.client.home.ClientHomeScreen
@@ -158,7 +159,7 @@ fun NavigationGraph(
                 navController.navigate(Routes.SignInScreen.route) {
                     popUpTo(0)
                 }
-            }, currentFreelancer = authViewModel.currentfreelancer?:FreeLancerData())
+            }, currentFreelancer = authViewModel.currentfreelancer ?: FreeLancerData())
         }
 
         composable(Routes.FreelancerBasicDetailsScreen.route) {
@@ -250,10 +251,21 @@ fun NavigationGraph(
             )
         }
         composable(Routes.AddNewProjectScreen.route) {
-            AddNewProjectScreen(addNewProjectScreenViewModel = addNewProjectScreenViewModel)
+            AddNewProjectScreen(
+                addNewProjectScreenViewModel = addNewProjectScreenViewModel,
+                onNextClicked = { navController.navigate(Routes.AddNewProjectScreen2.route) })
         }
         composable(Routes.AddNewProjectScreen2.route) {
-            AddNewProjectScreen2(addNewProjectScreenViewModel = addNewProjectScreenViewModel)
+            AddNewProjectScreen2(
+                addNewProjectScreenViewModel = addNewProjectScreenViewModel,
+                onNextClick = { navController.navigate(Routes.AddNewProjectScreen3.route) },
+                onBackClick = { navController.navigate(Routes.AddNewProjectScreen.route) })
+        }
+        composable(Routes.AddNewProjectScreen3.route) {
+            AddNewProjectScreen3(
+                addNewProjectScreenViewModel = addNewProjectScreenViewModel,
+                onNavigateBack = { navController.navigate(Routes.AddNewProjectScreen2.route) },
+                onSubmitButtonClicked = {})
         }
     }
 }

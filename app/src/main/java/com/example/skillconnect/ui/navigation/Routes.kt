@@ -24,4 +24,5 @@ sealed class Routes(val route: String) {
 
     data object AddNewProjectScreen : Routes("addNewProjectScreen")
     data object AddNewProjectScreen2 : Routes("addNewProjectScreen2")
+    data object AddNewProjectScreen3 : Routes("addNewProjectScreen3")
 }
