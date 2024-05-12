@@ -50,6 +50,7 @@ import com.example.skillconnect.data.projects
 import com.example.skillconnect.ui.components.FreelancerCard
 import com.example.skillconnect.ui.components.NameAndSeeMoreLink
 import com.example.skillconnect.ui.components.ProjectCard
+import com.example.skillconnect.ui.navigation.Routes
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -65,7 +66,7 @@ fun ClientHomeScreen(
 ) {
     Scaffold(floatingActionButton = {
         FloatingActionButton(
-            onClick = { navigateToNext("addNewProjectScreen") },
+            onClick = { navigateToNext(Routes.AddNewProjectScreen.route) },
             containerColor = Color(0xFF378805)
         ) {
             Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add", tint = Color.White);
