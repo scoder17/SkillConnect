@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.connectly.ui.screens.client.clientProject.ClientProjectScreen
 import com.example.skillconnect.R
 import com.example.skillconnect.model.FreeLancerData
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen
@@ -29,6 +30,8 @@ import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientBasicDe
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientFormScreen
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientFormScreenViewModel
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientSocialLinksFormScreen
+import com.example.skillconnect.ui.screens.client.clientProfile.ClientProfileScreen
+import com.example.skillconnect.ui.screens.client.home.ClientIncomeScreen
 import com.example.skillconnect.ui.screens.client.signIn.ClientSignInScreen
 import com.example.skillconnect.ui.screens.freelancer.formScreen.BasicDetailsFormScreen
 import com.example.skillconnect.ui.screens.freelancer.formScreen.FormScreenViewModel
@@ -156,7 +159,7 @@ fun NavigationGraph(
             onBottomBarVisibilityChanged(true)
             ProfileScreen(onLogOut = {
                 authViewModel.logout()
-                navController.navigate(Routes.SignInScreen.route) {
+                navController.navigate(Routes.GetStartedScreen.route) {
                     popUpTo(0)
                 }
             }, currentFreelancer = authViewModel.currentfreelancer ?: FreeLancerData())
@@ -266,6 +269,25 @@ fun NavigationGraph(
                 addNewProjectScreenViewModel = addNewProjectScreenViewModel,
                 onNavigateBack = { navController.navigate(Routes.AddNewProjectScreen2.route) },
                 onSubmitButtonClicked = {})
+        }
+
+        composable("clientIncomeScreen") {
+            onBottomBarVisibilityChanged(false)
+            ClientIncomeScreen()
+        }
+
+        composable("clientProjectScreen") {
+            onBottomBarVisibilityChanged(false)
+            ClientProjectScreen()
+        }
+
+        composable("clientProfileScreen") {
+            onBottomBarVisibilityChanged(true)
+            ClientProfileScreen(onLogOut = {
+                authViewModel.logout()
+                navController.navigate(Routes.GetStartedScreen.route) {
+                    popUpTo(0)
+                }})
         }
     }
 }

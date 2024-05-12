@@ -53,7 +53,7 @@ fun SearchScreen(
             },
             active = active,
             onActiveChange = { active = it },
-            placeholder = { Text(text = "What do you want to listen") },
+            placeholder = { Text(text = "Enter tech stack") },
             leadingIcon = {
                 if (active) {
                     Icon(

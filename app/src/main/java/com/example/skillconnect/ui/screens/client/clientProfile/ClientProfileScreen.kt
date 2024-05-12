@@ -22,6 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -49,16 +50,17 @@ import com.example.skillconnect.model.ClientData
 import com.example.skillconnect.model.ClientPastProjectDetails
 import com.example.skillconnect.ui.screens.client.clientProfile.ClientProfileScreenUiState
 import com.example.skillconnect.ui.screens.client.clientProfile.ClientProfileScreenViewModel
+import com.example.skillconnect.ui.screens.freelancer.profile.ProfileScreenTopBar
 import com.example.skillconnect.ui.viewModel.AuthViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ClientProfileScreen(modifier: Modifier = Modifier, currentClient:ClientData = ClientData() ) {
+fun ClientProfileScreen(modifier: Modifier = Modifier, currentClient:ClientData = ClientData(), onLogOut: () -> Unit = {}) {
     val clientProfileScreenViewModel: ClientProfileScreenViewModel = viewModel()
     val clientProfileScreenUiState by clientProfileScreenViewModel.clientProfile.collectAsState()
 
     Scaffold(
-        topBar = { ProfileScreenTopBar() }
+        topBar = { ClientProfileScreenTopBar(onLogOut = onLogOut) }
     ) {
         ProfileContent(
             modifier = Modifier
@@ -70,10 +72,23 @@ fun ClientProfileScreen(modifier: Modifier = Modifier, currentClient:ClientData 
     }
 }
 
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun ProfileScreenTopBar(modifier: Modifier = Modifier) {
+//    TopAppBar(title = { Text(text = "Profile") })
+//}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreenTopBar(modifier: Modifier = Modifier) {
-    TopAppBar(title = { Text(text = "Profile") })
+fun ClientProfileScreenTopBar(modifier: Modifier = Modifier, onLogOut: () -> Unit = {}) {
+    TopAppBar(title = {
+        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = modifier.fillMaxWidth()) {
+            Text(text = "Profile")
+            Button(onClick = onLogOut) {
+                Text(text = "Log Out")
+            }
+        }
+    })
 }
 
 @Composable
