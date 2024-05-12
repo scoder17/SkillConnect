@@ -6,12 +6,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,8 +28,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun AddNewProjectScreen2(
@@ -82,7 +91,36 @@ fun Project2Screen(
             }
         )
         FlowRow {
-
+            skills.forEachIndexed { index, s ->
+                Card(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp, vertical = 5.dp)
+                        .clip(RoundedCornerShape(100.dp))
+//            .border(
+//                BorderStroke(1.dp, Color(0xFF018786)), shape = RoundedCornerShape(100.dp)
+//            )
+//            .padding(12.dp)
+                ) {
+                    Row {
+                        Text(
+                            text = s,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(vertical = 10.dp, horizontal = 15.dp)
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "OK",
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .clickable { onRemoveSkills(index) }
+                        )
+                    }
+                }
+            }
         }
         OutlinedTextField(
             value = jobRequirements,
