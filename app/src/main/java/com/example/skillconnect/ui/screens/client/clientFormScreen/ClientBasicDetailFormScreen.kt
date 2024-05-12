@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -34,6 +35,8 @@ fun ClientBasicDetailsFormScreen(
     onPasswordChange: (String) -> Unit,
     confirmPassword: String,
     onConfirmPasswordChange: (String) -> Unit,
+    aboutMe:String,
+    onAboutMeChange: (String) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -75,8 +78,24 @@ fun ClientBasicDetailsFormScreen(
             onValueChange = { onEmailChange(it) },
             placeholder = { Text(text = "Example:- yourmail@gmail.com", color = Color.Gray) },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             trailingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
+        )
+
+        Spacer(modifier = Modifier.size(10.dp))
+        Text(
+            text = "Email Id",
+            modifier = Modifier.padding(bottom = 10.dp),
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color.Gray
+        )
+        OutlinedTextField(
+            value = aboutMe,
+            onValueChange = { onAboutMeChange(it) },
+            placeholder = { Text(text = "aboutMe", color = Color.Gray) },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            trailingIcon = { Icon(imageVector = Icons.Default.Info, contentDescription = "about me") }
         )
 
         Spacer(modifier = Modifier.size(20.dp))
