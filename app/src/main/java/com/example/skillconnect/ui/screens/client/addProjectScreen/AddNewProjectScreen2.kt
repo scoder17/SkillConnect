@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -27,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
@@ -49,8 +53,8 @@ fun AddNewProjectScreen2(
             modifier = Modifier.padding(it),
             skills = addNewProjectScreen2UIState.skills,
             onRemoveSkills = { addNewProjectScreenViewModel.removeSkills(it) },
-            onJobRequired = {addNewProjectScreenViewModel.jobRequired(it)},
-            onUpdateSkills = {addNewProjectScreenViewModel.updateSkills(it)},
+            onJobRequired = { addNewProjectScreenViewModel.jobRequired(it) },
+            onUpdateSkills = { addNewProjectScreenViewModel.updateSkills(it) },
             jobRequirements = addNewProjectScreen2UIState.jobRequirements,
             onBackClick = onBackClick,
             onNextClick = onNextClick
@@ -86,10 +90,15 @@ fun Project2Screen(
                     contentDescription = "OK",
                     modifier = Modifier
                         .padding(end = 8.dp)
-                        .clickable { onUpdateSkills(tempSkill) }
+                        .clickable { onUpdateSkills(tempSkill);tempSkill = "" }
                 )
-            }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Skills")}
         )
+
+        Spacer(modifier = Modifier.size(10.dp))
+
         FlowRow {
             skills.forEachIndexed { index, s ->
                 Card(
@@ -101,7 +110,7 @@ fun Project2Screen(
 //            )
 //            .padding(12.dp)
                 ) {
-                    Row {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = s,
                             textAlign = TextAlign.Center,
@@ -110,7 +119,6 @@ fun Project2Screen(
                             fontSize = 14.sp,
                             modifier = Modifier.padding(vertical = 10.dp, horizontal = 15.dp)
                         )
-                        Spacer(modifier = Modifier.weight(1f))
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = "OK",
@@ -122,13 +130,16 @@ fun Project2Screen(
                 }
             }
         }
+        Spacer(modifier = Modifier.size(20.dp))
         OutlinedTextField(
             value = jobRequirements,
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = { onJobRequired(it) },
             label = { Text(text = "job Requirements") },
-            )
-
-        Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
+            leadingIcon = { Icon(imageVector = Icons.Default.Work, contentDescription = "job Requirements")}
+        )
+        Spacer(modifier = Modifier.size(20.dp))
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Button(onClick = onBackClick) {
                 Text(text = "Back")
             }

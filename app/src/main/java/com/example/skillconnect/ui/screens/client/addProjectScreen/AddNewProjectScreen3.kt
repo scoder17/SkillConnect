@@ -3,11 +3,16 @@ package com.example.skillconnect.ui.screens.client.addProjectScreen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 //@Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -37,7 +43,10 @@ fun AddNewProjectScreen3(
         DetailsOfCompany(
             aboutClient = addNewProjectScreen3UIState.aboutClient,
             rolesResponsibilities = addNewProjectScreen3UIState.rolesAndResponsibilities,
-            modifier = Modifier.padding(it),
+            modifier = Modifier
+                .padding(it)
+                .fillMaxWidth()
+                .padding(16.dp),
             updateAboutClient = { addNewProjectScreenViewModel.updateAboutClient(it) },
             updateRolesResponsibilities = { addNewProjectScreenViewModel.updateRolesAndResponsibilities(it) },
             onNavigateBack = onNavigateBack,
@@ -69,15 +78,21 @@ fun DetailsOfCompany(
                 value = aboutClient,
                 onValueChange = { updateAboutClient(it) },
                 label = { Text(text = "About Company") },
-                maxLines = 70
+                maxLines = 70,
+                modifier = Modifier.fillMaxWidth(),
+                leadingIcon = { Icon(imageVector = Icons.Default.Info, contentDescription = "About Company")}
             )
+            Spacer(modifier = Modifier.padding(16.dp))
             OutlinedTextField(
                 value = rolesResponsibilities,
                 onValueChange = { updateRolesResponsibilities(it) },
-                label = { Text(text = "About Company") },
-                maxLines = 100
+                label = { Text(text = "Roles and Responsibilities") },
+                maxLines = 100,
+                modifier = Modifier.fillMaxWidth(),
+                leadingIcon = { Icon(imageVector = Icons.Default.Lightbulb, contentDescription = "Roles and Responsibilities")}
             )
         }
+        Spacer(modifier = Modifier.padding(16.dp))
         Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
             Button(onClick =onNavigateBack) {
                 Text(text = "Back")
