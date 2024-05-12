@@ -1,5 +1,6 @@
 package com.example.skillconnect.ui.screens.client.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +19,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +35,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,6 +52,7 @@ import com.example.skillconnect.ui.components.NameAndSeeMoreLink
 import com.example.skillconnect.ui.components.ProjectCard
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClientHomeScreen(
@@ -56,7 +63,14 @@ fun ClientHomeScreen(
 //    notificationSection: @Composable () -> Unit,
     navigateToNext: (String) -> Unit
 ) {
-
+    Scaffold(floatingActionButton = {
+        FloatingActionButton(
+            onClick = { /*TODO*/ },
+            containerColor = Color(0xFF378805)
+        ) {
+            Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add", tint = Color.White);
+        }
+    }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -122,17 +136,18 @@ fun ClientHomeScreen(
                 modifier = Modifier.padding(start = 15.dp),
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                items(freelancers){item->
+                items(freelancers) { item ->
                     FreelancerCard(freelancer = item) {
-                        
+
                     }
-                    
+
                 }
             }
+
         }
     }
 
-
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
