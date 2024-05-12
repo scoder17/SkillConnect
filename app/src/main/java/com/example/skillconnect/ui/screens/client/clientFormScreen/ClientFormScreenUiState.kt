@@ -6,5 +6,6 @@ data class ClientFormScreenUiState(
     val password:String="",
     val confirmPassword:String="",
     val linkedIn:String="",
-    val twitter:String=""
+    val twitter:String="",
+    val userAboutMe:String="",
 )

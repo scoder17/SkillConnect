@@ -57,4 +57,12 @@ class ClientFormScreenViewModel : ViewModel() {
             )
         }
     }
+
+    fun updateAboutMe(updatedAboutMe: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                userAboutMe = updatedAboutMe
+            )
+        }
+    }
 }
