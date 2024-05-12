@@ -18,17 +18,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.connectly.ui.screens.client.clientProject.ClientProjectScreen
+import com.example.skillconnect.ui.screens.client.clientProject.ClientProjectScreen
 import com.example.skillconnect.R
 import com.example.skillconnect.model.FreeLancerData
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen2
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreen3
-import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreenUIState
 import com.example.skillconnect.ui.screens.client.addProjectScreen.AddNewProjectScreenViewModel
 import com.example.skillconnect.ui.screens.client.home.ClientHomeScreen
 import com.example.skillconnect.ui.screens.client.searchScreen.ClientSearchScreen
-import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientBasicDetailsFormScreen
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientFormScreen
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientFormScreenViewModel
 import com.example.skillconnect.ui.screens.client.clientFormScreen.ClientSocialLinksFormScreen
@@ -51,7 +49,6 @@ import com.example.skillconnect.ui.screens.welcome.GetStartedScreen
 import com.example.skillconnect.ui.screens.welcome.WelcomeScreen
 import com.example.skillconnect.ui.viewModel.AuthViewModel
 import java.time.LocalDate
-import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -297,7 +294,7 @@ fun NavigationGraph(
 
         composable("clientProjectScreen") {
             onBottomBarVisibilityChanged(false)
-            ClientProjectScreen()
+            ClientProjectScreen(authViewModel = authViewModel)
         }
 
         composable("clientProfileScreen") {

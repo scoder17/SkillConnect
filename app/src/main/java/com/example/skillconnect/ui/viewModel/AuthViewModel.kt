@@ -18,7 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.util.Date
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -259,20 +259,43 @@ open class AuthViewModel @Inject constructor(
         documentReference.set(project)
     }
 
-    fun getClientProjects(): List<ProjectData> {
+//    fun getClientProjects(): List<ProjectData> {
+//        val projects = mutableListOf<ProjectData>()
+//        db.collection(PROJECT_NODE).whereEqualTo("clientId", currentClient?.id).get()
+//            .addOnSuccessListener {
+//                for (document in it) {
+//                    val project = document.toObject(ProjectData::class.java)
+//                    projects.add(project)
+//                }
+//            }
+//            .addOnFailureListener {
+//                Log.e("TAG", "getClientProjects: ${it.localizedMessage}")
+//            }
+//        return projects
+//    }
+
+
+
+    suspend fun getClientProjects(): List<ProjectData> {
         val projects = mutableListOf<ProjectData>()
-        db.collection(PROJECT_NODE).whereEqualTo("clientId", currentClient?.id).get()
-            .addOnSuccessListener {
-                for (document in it) {
-                    val project = document.toObject(ProjectData::class.java)
-                    projects.add(project)
-                }
+
+        try {
+            val querySnapshot = db.collection(PROJECT_NODE)
+                .whereEqualTo("clientId", currentClient?.id)
+                .get()
+                .await()
+
+            for (document in querySnapshot) {
+                val project = document.toObject(ProjectData::class.java)
+                projects.add(project)
             }
-            .addOnFailureListener {
-                Log.e("TAG", "getClientProjects: ${it.localizedMessage}")
-            }
+        } catch (e: Exception) {
+            Log.e("TAG", "getClientProjects: ${e.localizedMessage}")
+        }
+
         return projects
     }
+
 
     fun logout() {
         isLoggedIn.value = false

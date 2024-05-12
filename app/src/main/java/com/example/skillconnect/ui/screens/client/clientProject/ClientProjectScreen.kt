@@ -1,6 +1,7 @@
-package com.example.connectly.ui.screens.client.clientProject
+package com.example.skillconnect.ui.screens.client.clientProject
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,19 +37,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.skillconnect.R
-import com.example.skillconnect.model.ClientProjectDetails
-import com.example.skillconnect.ui.theme.SkillConnectTheme
+import com.example.skillconnect.model.ProjectData
+import com.example.skillconnect.ui.screens.freelancer.project.ProjectListItem
+import com.example.skillconnect.ui.screens.freelancer.project.ProjectListItemBottom
+import com.example.skillconnect.ui.screens.freelancer.project.ProjectListItemTop
+import com.example.skillconnect.ui.viewModel.AuthViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ClientProjectScreen(modifier: Modifier = Modifier) {
+fun ClientProjectScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
+    var projectList by remember { mutableStateOf(emptyList<ProjectData>()) }
+    LaunchedEffect(key1 = Unit) {
+        val fetchedProjects = authViewModel.getClientProjects()
+        projectList = fetchedProjects
+    }
     Scaffold(
         topBar = { ProjectScreenTopBar() }
     ) {
-        ClientProjectList(modifier = Modifier.padding(it))
+        ClientProjectList(modifier = Modifier.padding(it), authViewModel = authViewModel, projectList = projectList)
     }
 }
 
@@ -58,109 +67,110 @@ fun ProjectScreenTopBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ClientProjectList(modifier: Modifier = Modifier) {
-    val projectList: List<ClientProjectDetails> = listOf(
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Active"
-        ),
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Completed"
-        ),
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Pending"
-        ),
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Active"
-        ),
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Active"
-        ),
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Completed"
-        ),
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Pending"
-        ),
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Pending"
-        ),
-        ClientProjectDetails(
-            image = R.drawable.profile_image,
-            title = "Beats Logo Design",
-            description = "by AI Hasanav",
-            deadlineDate = "22 July 2023",
-            payment = "$1000",
-            projectStatus = "Completed"
-        ),
-    )
+fun ClientProjectList(modifier: Modifier = Modifier, authViewModel: AuthViewModel, projectList: List<ProjectData> ) {
+//    val projectList: List<ClientProjectDetails> = listOf(
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Active"
+//        ),
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Completed"
+//        ),
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Pending"
+//        ),
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Active"
+//        ),
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Active"
+//        ),
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Completed"
+//        ),
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Pending"
+//        ),
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Pending"
+//        ),
+//        ClientProjectDetails(
+//            image = R.drawable.profile_image,
+//            title = "Beats Logo Design",
+//            description = "by AI Hasanav",
+//            deadlineDate = "22 July 2023",
+//            payment = "$1000",
+//            projectStatus = "Completed"
+//        ),
+//    )
     var filterCriteria by remember {
-        mutableStateOf("Active")
+        mutableStateOf("Open")
     }
     var activeSelected by remember { mutableStateOf(true) }
     var completedSelected by remember { mutableStateOf(false) }
     var pendingSelected by remember { mutableStateOf(false) }
+
     Column(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedButton(
                 onClick = {
                     completedSelected = false; activeSelected = true; pendingSelected =
-                    false; filterCriteria = "Active"
+                    false; filterCriteria = "Open"
                 },
                 modifier = Modifier
                     .padding(horizontal = 10.dp),
                 colors = ButtonDefaults.outlinedButtonColors(containerColor = if (activeSelected) Color.Blue else Color.Transparent)
             ) {
-                Text(text = "Active")
+                Text(text = "Open")
             }
-            OutlinedButton(
-                onClick = {
-                    pendingSelected = true; activeSelected = false; completedSelected =
-                    false; filterCriteria = "Pending";
-                }, modifier = Modifier.padding(horizontal = 10.dp),
-                colors = ButtonDefaults.outlinedButtonColors(containerColor = if (pendingSelected) Color.Blue else Color.Transparent)
-            ) {
-                Text(text = "Pending")
-            }
+//            OutlinedButton(
+//                onClick = {
+//                    pendingSelected = true; activeSelected = false; completedSelected =
+//                    false; filterCriteria = "Pending";
+//                }, modifier = Modifier.padding(horizontal = 10.dp),
+//                colors = ButtonDefaults.outlinedButtonColors(containerColor = if (pendingSelected) Color.Blue else Color.Transparent)
+//            ) {
+//                Text(text = "Pending")
+//            }
             OutlinedButton(
                 onClick = {
                     completedSelected = true; activeSelected = false; filterCriteria =
@@ -174,14 +184,15 @@ fun ClientProjectList(modifier: Modifier = Modifier) {
         }
 
         LazyColumn() {
-            items(projectList.filter { it.projectStatus == filterCriteria }) {
+        Log.d("projectListhere", "ClientProjectList: ${projectList}")
+            items(projectList.filter { it.status == filterCriteria }) {
                 ProjectListItem(
-                    image = it.image,
+                    image = R.drawable.ic_launcher_foreground,
                     title = it.title,
                     description = it.description,
-                    deadlineDate = it.deadlineDate,
-                    payment = it.payment,
-                    projectStatus = it.projectStatus,
+                    deadlineDate = it.deadline,
+                    payment = it.budget,
+                    projectStatus = it.status,
                     modifier = Modifier
                         .padding(16.dp)
                 )
@@ -189,6 +200,8 @@ fun ClientProjectList(modifier: Modifier = Modifier) {
         }
     }
 }
+
+
 
 @Composable
 fun ProjectListItem(
@@ -282,8 +295,8 @@ fun ProjectListItemBottom(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ClientProjectScreenPreview(modifier: Modifier = Modifier) {
-    SkillConnectTheme { ClientProjectScreen() }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun ClientProjectScreenPreview(modifier: Modifier = Modifier) {
+//    SkillConnectTheme { ClientProjectScreen() }
+//}
