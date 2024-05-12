@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun AddNewProjectScreen(modifier: Modifier = Modifier,addNewProjectScreenViewModel: AddNewProjectScreenViewModel) {
+fun AddNewProjectScreen(modifier: Modifier = Modifier,addNewProjectScreenViewModel: AddNewProjectScreenViewModel,onNextClicked: ()->Unit) {
     val addNewProjectScreenUIState by addNewProjectScreenViewModel.uiState.collectAsState()
     Scaffold(topBar = { AddNewProjectScreenTopBar() }) {
         AddNewProject(
@@ -45,7 +45,8 @@ fun AddNewProjectScreen(modifier: Modifier = Modifier,addNewProjectScreenViewMod
             onBudgetChange = { addNewProjectScreenViewModel.updateBudget(it) },
             onDescriptionChange = { addNewProjectScreenViewModel.updateDescription(it) },
             onDeadLineChange = { addNewProjectScreenViewModel.updateDeadline(it) },
-            onTitleChange = { addNewProjectScreenViewModel.updateTitle(it) }
+            onTitleChange = { addNewProjectScreenViewModel.updateTitle(it) },
+            onNextClicked = onNextClicked
         )
     }
 }
@@ -60,7 +61,8 @@ fun AddNewProject(
     onTitleChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
     onBudgetChange: (String) -> Unit,
-    onDeadLineChange: (String) -> Unit
+    onDeadLineChange: (String) -> Unit,
+    onNextClicked: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -111,7 +113,7 @@ fun AddNewProject(
         )
         Spacer(modifier = Modifier.size(20.dp))
         Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.End) {
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = { onNextClicked() }) {
                 Text(text = "Next")
             }
         }
@@ -138,7 +140,8 @@ fun AddNewProjectScreenPreview() {
             onBudgetChange = { addNewProjectScreenViewModel.updateBudget(it) },
             onDescriptionChange = { addNewProjectScreenViewModel.updateDescription(it) },
             onDeadLineChange = { addNewProjectScreenViewModel.updateDeadline(it) },
-            onTitleChange = { addNewProjectScreenViewModel.updateTitle(it) }
+            onTitleChange = { addNewProjectScreenViewModel.updateTitle(it) },
+            onNextClicked = {}
         )
     }
 }
