@@ -8,14 +8,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.skillconnect.data.CLIENT_NODE
 import com.example.skillconnect.data.FREELANCER_NODE
+import com.example.skillconnect.data.PROJECT_NODE
 import com.example.skillconnect.model.ClientData
 import com.example.skillconnect.model.FreeLancerData
+import com.example.skillconnect.model.ProjectData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -67,7 +70,7 @@ open class AuthViewModel @Inject constructor(
             }
     }
 
-     fun signInClient(email: String, password: String) {
+    fun signInClient(email: String, password: String) {
         inProgress = true
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
             Log.d(
@@ -219,11 +222,65 @@ open class AuthViewModel @Inject constructor(
     }
 
     fun addProject(
+        title: String,
+        description: String,
+        date: String,
+        deadline: String,
+        status: String,
+        applicants: List<String>? = null,
+        roles: String,
+        requiredSkills: List<String>,
+        budget: String,
+        aboutCompany: String,
+        clientId: String,
+        freelancerId: String? = null,
+    ) {
+        // Create a new document reference with a randomly generated ID
+        val documentReference = db.collection(PROJECT_NODE).document()
 
-    ){}
+        // Create a new project object with the randomly generated ID
+        val project = ProjectData(
+            id = documentReference.id,
+            title = title,
+            description = description,
+            date = date,
+            deadline = deadline,
+            status = status,
+            applicants = applicants,
+            roles = roles,
+            requiredSkills = requiredSkills,
+            budget = budget,
+            aboutCompany = aboutCompany,
+            clientId = clientId,
+            freelancerId = freelancerId,
+        )
+
+        // Set the project object in the newly created document
+        documentReference.set(project)
+    }
+
+    fun getClientProjects(): List<ProjectData> {
+        val projects = mutableListOf<ProjectData>()
+        db.collection(PROJECT_NODE).whereEqualTo("clientId", currentClient?.id).get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val project = document.toObject(ProjectData::class.java)
+                    projects.add(project)
+                }
+            }
+            .addOnFailureListener {
+                Log.e("TAG", "getClientProjects: ${it.localizedMessage}")
+            }
+        return projects
+    }
 
     fun logout() {
         isLoggedIn.value = false
+        auth.signOut()
+    }
+
+    fun logoutClient() {
+        isClientLoggedIn.value = false
         auth.signOut()
     }
 

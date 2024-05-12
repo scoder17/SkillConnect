@@ -1,5 +1,7 @@
 package com.example.skillconnect.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
@@ -48,7 +50,10 @@ import com.example.skillconnect.ui.screens.freelancer.signIn.SignInScreen
 import com.example.skillconnect.ui.screens.welcome.GetStartedScreen
 import com.example.skillconnect.ui.screens.welcome.WelcomeScreen
 import com.example.skillconnect.ui.viewModel.AuthViewModel
+import java.time.LocalDate
+import java.util.Date
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
@@ -268,7 +273,21 @@ fun NavigationGraph(
             AddNewProjectScreen3(
                 addNewProjectScreenViewModel = addNewProjectScreenViewModel,
                 onNavigateBack = { navController.navigate(Routes.AddNewProjectScreen2.route) },
-                onSubmitButtonClicked = {})
+                onSubmitButtonClicked = {
+                    authViewModel.addProject(
+                        title = addNewProjectScreenViewModel.uiState.value.title,
+                        description = addNewProjectScreenViewModel.uiState.value.description,
+                        budget = addNewProjectScreenViewModel.uiState.value.budget,
+                        requiredSkills = addNewProjectScreenViewModel.uiState.value.skills,
+                        deadline = addNewProjectScreenViewModel.uiState.value.deadline,
+                        clientId = authViewModel.currentClient?.id ?: "",
+                        aboutCompany = addNewProjectScreenViewModel.uiState.value.aboutClient,
+                        date = LocalDate.now().toString(),
+                        status = "Open",
+                        roles = addNewProjectScreenViewModel.uiState.value.rolesAndResponsibilities,
+                    )
+                    navController.navigate(Routes.ClientHomeScreen.route)
+                })
         }
 
         composable("clientIncomeScreen") {
@@ -284,10 +303,11 @@ fun NavigationGraph(
         composable("clientProfileScreen") {
             onBottomBarVisibilityChanged(true)
             ClientProfileScreen(onLogOut = {
-                authViewModel.logout()
+                authViewModel.logoutClient()
                 navController.navigate(Routes.GetStartedScreen.route) {
                     popUpTo(0)
-                }})
+                }
+            })
         }
     }
 }
